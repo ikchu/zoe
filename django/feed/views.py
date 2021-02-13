@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
 # Create your views here.
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'feed/home.html'
     context_object_name = 'posts'
@@ -46,7 +46,7 @@ def post_detail(request, pk):
     if request.method == 'POST':
         form = NewCommentForm(request.POST)
         if form.is_valid():
-            data = form.save(commi=False)
+            data = form.save(commit=False)
             data.post = post
             data.username = user
             data.save()
@@ -81,7 +81,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         post = self.get_object()
-        if self.request.usr == post.user_name:
+        if self.request.user == post.user_name:
             return True
         return False
 
@@ -95,5 +95,5 @@ def post_delete(request, pk):
 @login_required
 def search_posts(request):
     query = request.GET.get('p') # ?? is this something from the user? what is 'p'?
-    object_list = Post.objects.filter(tags_icontains=query)
+    object_list = Post.objects.filter(tags__icontains=query)
     return render(request, 'feed/search_posts.html', {'posts':object_list})

@@ -32,8 +32,8 @@ def users_list(request):
     my_friends = request.user.profile.friends.all()
     # if any of this user's friends are in friends, remove them
     for friend in my_friends:
-        if i in friends:
-            friends.remove(i)
+        if friend in friends:
+            friends.remove(friend)
     # if this user himself is in friends, remove him
     if request.user.profile in friends:
         friends.remove(request.user.profile)
