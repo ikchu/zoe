@@ -1,3 +1,5 @@
+# ignore settings.py to avoid accidentally pushing keys or IPs
+zoe/settings.py
 **/__pycache__/
 media/
 env/

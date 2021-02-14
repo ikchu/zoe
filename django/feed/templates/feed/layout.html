@@ -5,35 +5,33 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="icon" type="image/png" href="https://storage.googleapis.com/bytewalk/icon.png"/>
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
         <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/bytewalk/profilepage.css">
         <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/bytewalk/styles.css">
         {% block cssfiles %}{% endblock cssfiles %}
+        <style>
+        </style>
         <title>Zoe</title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-            <a class="navbar-brand ml-4 mr-4" href="#"><b>Zoe</b></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
-                    <a class="nav-item nav-link" href="{% url 'users_list' %}">Add New Friends</a>
+        <nav class="navbar navbar-light bg-white sticky-top">
+            <div class="container-fluid">
+                <a class="navbar-brand ml-4 mr-4" href="{% url 'home' %}"><b>Zoe</b></a>
+                <div class="d-flex justify-content-right">
                     {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'friend_list' %}">Friends</a> 
-                    <a class="nav-item nav-link" href="{% url 'my_profile' %}">Profile</a> 
-                    <a class="nav-item nav-link" href="{% url 'post-create' %}">Create Post</a>
-                    <a class="nav-item nav-link btn btn-danger ml-4  text-light" href="{% url 'logout' %}">Logout</a>
-                    {% else %}
-                    <a class="nav-item nav-link btn btn-success ml-4  text-light" href="{% url 'login' %}">Login</a>
-                    <a class="nav-item nav-link btn btn-info ml-3  text-light" href="{% url 'register' %} ">Register</a>
+                    <a class="nav-item nav-link" href="{% url 'post-create' %}"> <img src="/media/icons/image.svg" alt="" width="30" height="30"/> </a>
+                    <a class="nav-item nav-link" href="{% url 'users_list' %}"> <img src="/media/icons/person-plus-fill.svg" alt="" width="30" height="32"/> </a>
+                    <a class="nav-item nav-link" href="{% url 'my_profile' %}"> <img src="/media/icons/person-circle.svg" alt="" width="30" height="30"> </a>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link" data-bs-toggle="dropdown" role="button" aria-expanded="false"> <img src="/media/icons/justify.svg" alt="" width="30" height="30"> </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><img src="/media/icons/gear.svg">   Settings</a></li>
+                            <li><a class="dropdown-item" href="{%url 'logout' %}"><img src="/media/icons/box-arrow-right.svg">   Log Out</a></li>
+                        </ul>
+                    </div>
                     {% endif %}
-                    {% block searchform %}{% endblock searchform %}
                 </div>
             </div>
         </nav>
@@ -42,13 +40,13 @@
         </div>
         <footer class="page-footer font-small black">
             <div class="footer-copyright text-center py-3">Zoe © 2021
-                <br><small class="text-muted">All rights reserved!</small>
+                <br><small class="text-muted">All rights reserved</small>
             </div>
         </footer>
         <!-- JS Files -->
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        {% comment %} <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> {% endcomment %}
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
         {% block jsfiles %}{% endblock jsfiles %}
     </body>
 </html>
