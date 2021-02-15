@@ -21,7 +21,7 @@ class Profile(models.Model):
         return f"/users/{self.slug}"
     
     def get_image_url(self):
-        if self.image and hasattr(self, 'url'):
+        if self.image and hasattr(self.image, 'url'):
             return self.image.url
         else:
             return '/static/img/default.png'
