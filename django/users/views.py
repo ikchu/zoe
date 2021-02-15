@@ -55,6 +55,7 @@ def users_list(request):
     return render(request, 'users/users_list.html', context)
 
 # NOTE: why is login not required for this one?
+# I guess in the profile.html (the only tpl where this is called), we verify the user first
 def friend_list(request):
     user = request.user.profile
     friends = user.friends.all()

@@ -2,7 +2,6 @@
 {% load static %}
 {% block cssfiles %}
 {% endblock cssfiles %}
-{% block searchform %}
 {% block content %}
 <div class="container">
     <div class="row">
@@ -35,10 +34,7 @@
             </div>
             {% else %}
             <h5>
-                <i
-                    >You have no friends now! Make some new
-                <a href="{% url 'users_list' %}">friends here!</a></i
-                    >
+                <i>You have no friends yet.</i>
             </h5>
             {% endif %}
         </div>
