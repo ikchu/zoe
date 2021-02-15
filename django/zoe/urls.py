@@ -30,17 +30,14 @@ from django.conf import settings
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('users/', user_views.users_list, name='users_list'),
     path('users/<slug>/', user_views.profile_view, name='profile_view'),
     path('friends/', user_views.friend_list, name='friend_list'),
-    # path('users/friend-request/send/<int:id>/', user_views.send_friend_request, name='send_friend_request'),
-    # path('users/friend-request/cancel/<int:id>/', user_views.cancel_friend_request, name='cancel_friend_request'),
+    path('add-users/', user_views.add_users, name='add_users'),
     path('users/friend-request/accept/<int:id>/', user_views.accept_friend_request, name='accept_friend_request'),
     path('users/friend-request/delete/<int:id>/', user_views.delete_friend_request, name='delete_friend_request'),
     path('users/friend/delete/<int:id>/', user_views.delete_friend, name='delete_friend'),
     path('edit-profile/', user_views.edit_profile, name='edit_profile'),
     path('my-profile/', user_views.my_profile, name='my_profile'),
-    # path('search_users/', user_views.search_users, name='search_users'),
     path('register/', user_views.register, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
@@ -54,7 +51,6 @@ urlpatterns = [
     path('post/<int:pk>/', feed_views.post_detail, name='post-detail'),
     path('post/<int:pk>/update/', feed_views.PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete/', feed_views.post_delete, name='post-delete'),
-    path('search-posts/', feed_views.search_posts, name='search_posts'),
     path('user-posts/<str:username>', feed_views.UserPostListView.as_view(), name='user-posts')
 
     # path('', include(router.urls)),

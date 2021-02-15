@@ -6,7 +6,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from feed.models import Post
 from .models import Profile, FriendRequest
-from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
+from .forms import AddUserForm, UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
 import random
 
 # Create your views here.
@@ -65,10 +65,17 @@ def friend_list(request):
     return render(request, 'users/friend_list.html', context)
 
 @login_required
-def send_friend_request(request, id):
-    user = get_object_or_404(User, id=id)
-    friend_request, created = FriendRequest.objects.get_or_create(from_user=request.user, to_user=user)
-    return HttpResponseRedirect(f'/users/{user.profile.slug}')
+def add_users(request):
+    if request.method == 'POST':
+        form = AddUserForm(request.POST)
+        if form.is_valid():
+            to_user = User.objects.filter(username=form.cleaned_data.get('to_user'))
+            if to_user.exists():
+                FriendRequest.objects.create(to_user=to_user.first(), from_user=request.user)
+        return redirect('add_users')
+    else:
+        form = AddUserForm()
+    return render(request, 'users/add_users.html', {'form':form})
 
 @login_required
 def cancel_friend_request(request, id):
@@ -111,6 +118,7 @@ def delete_friend(request, id):
     return HttpResponseRedirect(f'/users/{friend_profile.slug}')
 
 @login_required
+# @permission_required
 def profile_view(request, slug):
     # Note: any user could call this function to look up any other user...
     # So, although we set these vars here, we will need to check later whether
