@@ -8,8 +8,6 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-        <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/bytewalk/profilepage.css">
-        <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/bytewalk/styles.css">
         {% block cssfiles %}{% endblock cssfiles %}
         <style>
         </style>
@@ -21,14 +19,14 @@
                 <a class="navbar-brand ml-4 mr-4" href="{% url 'home' %}"><b>Zoe</b></a>
                 <div class="d-flex justify-content-right">
                     {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'post-create' %}"> <img src="/media/icons/image.svg" alt="" width="30" height="30"/> </a>
-                    <a class="nav-item nav-link" href="{% url 'users_list' %}"> <img src="/media/icons/person-plus-fill.svg" alt="" width="30" height="32"/> </a>
-                    <a class="nav-item nav-link" href="{% url 'my_profile' %}"> <img src="/media/icons/person-circle.svg" alt="" width="30" height="30"> </a>
+                    <a class="nav-item nav-link" href="{% url 'post-create' %}"> <img src="{% static 'icons/image.svg' %}" alt="" width="30" height="30"/> </a>
+                    {% comment %} <a class="nav-item nav-link" href="{% url 'add-' %}"> <img src="/media/icons/person-plus-fill.svg" alt="" width="30" height="32"/> </a> {% endcomment %}
+                    <a class="nav-item nav-link" href="{% url 'my_profile' %}"> <img src="{% static 'icons/person-circle.svg' %}" alt="" width="30" height="30"> </a>
                     <div class="nav-item dropdown">
-                        <a class="nav-link" data-bs-toggle="dropdown" role="button" aria-expanded="false"> <img src="/media/icons/justify.svg" alt="" width="30" height="30"> </a>
+                        <a class="nav-link" data-bs-toggle="dropdown" role="button" aria-expanded="false"> <img src="{% static 'icons/justify.svg' %} " alt="" width="30" height="30"> </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#"><img src="/media/icons/gear.svg">   Settings</a></li>
-                            <li><a class="dropdown-item" href="{%url 'logout' %}"><img src="/media/icons/box-arrow-right.svg">   Log Out</a></li>
+                            <li><a class="dropdown-item" href="#"><img src="{% static 'icons/gear.svg' %}">   Settings</a></li>
+                            <li><a class="dropdown-item" href="{%url 'logout' %}"><img src="{% static 'icons/box-arrow-right.svg' %}">   Log Out</a></li>
                         </ul>
                     </div>
                     {% endif %}

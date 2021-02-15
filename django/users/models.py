@@ -9,7 +9,7 @@ from autoslug import AutoSlugField
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='default.png', upload_to='profile_pics')
+    image = models.ImageField(upload_to='profile_pics')
     slug = AutoSlugField(populate_from='user')
     bio = models.CharField(max_length = 255, blank=True)
     friends = models.ManyToManyField("Profile", blank=True)
@@ -19,6 +19,12 @@ class Profile(models.Model):
 
     def get_absolute_url(self):
         return f"/users/{self.slug}"
+    
+    def get_image_url(self):
+        if self.image and hasattr(self, 'url'):
+            return self.image.url
+        else:
+            return '/static/img/default.png'
 
 # Function that creates Profile automatically, as soon as a User is created
 def post_save_user_model_receiver(sender, instance, created, *args, **kwargs):

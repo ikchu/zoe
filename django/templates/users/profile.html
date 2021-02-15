@@ -2,18 +2,7 @@
 {% load static %}
 {% block cssfiles %}
 {% endblock cssfiles %}
-{% block searchform %}
-<form
-    class="form-inline my-2 my-lg-0 ml-5"
-    action="{% url 'search_users' %}"
-    method="get"
-    >
-    <input name="q" type="text" placeholder="Search users.." />
-    <button class="btn btn-success my-2 my-sm-0 ml-4" type="submit">
-    Search
-    </button>
-</form>
-{% endblock searchform %} {% block content %}
+{% block content %}
 <div class="main-content">
     <div class="container mt-7">
         <div class="row">
@@ -22,9 +11,9 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
-                                <a href="{{ u.profile.image.url }}">
+                                <a href="{{ u.profile.get_image_url }}"> 
                                 <img
-                                    src="{{ user.profile.image.url }}"
+                                    src="{{ user.profile.get_image_url }}"
                                     class="rounded-circle"
                                     width="160px"
                                     height="160px"
@@ -127,7 +116,7 @@
                         {% else %} {% for s_request in sent_friend_requests %}
                         <a href="{{ s_request.to_user.profile.get_absolute_url }}"
                             ><img
-                            src="{{ s_request.to_user.profile.image.url }}"
+                            src="{{ s_request.to_user.profile.get_image_url }}"
                             class="rounded mr-2"
                             width="40"
                             height="40"
@@ -158,7 +147,7 @@
                         {% else %} {% for r_request in received_friend_requests %}
                         <a href="{{ r_request.from_user.profile.get_absolute_url }}"
                             ><img
-                            src="{{ r_request.from_user.profile.image.url }}"
+                            src="{{ r_request.from_user.profile.get_image_url }}"
                             class="rounded mr-2"
                             width="40"
                             height="40"

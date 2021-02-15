@@ -17,39 +17,44 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            {% if friends %}
+            {% if users %}
             <div class="card card-signin my-5">
                 <div class="card-body">
-                    {% for user_p in friends %}
-                    <a href="{{ user_p.get_absolute_url }}"
-                        ><img
-                        src="{{ user_p.image.url }}"
-                        class="rounded mr-2"
-                        width="40"
-                        height="40"
-                        alt=""
-                        /></a>
-                    <a class="text-dark" href="{{ user_p.get_absolute_url }}"
-                        ><b>{{ user_p }}</b></a
-                        >
-                    <small
-                        ><a
-                        class="btn btn-danger float-right"
-                        href="{% url 'delete_friend' user_p.id %}"
-                        >UnFriend</a
-                        ></small
-                        >
-                    <br /><br />
+                    {% for user_p in users %}
+                        <a href="{{ user_p.get_absolute_url }}"
+                            ><img
+                            src="{{ user_p.get_image_url }}"
+                            class="rounded mr-2"
+                            width="40"
+                            height="40"
+                            alt=""
+                            /></a>
+                        <a class="text-dark" href="{{ user_p.get_absolute_url }}"
+                            ><b>{{ user_p }}</b></a
+                            >
+                        {% if not user_p.user in sent %}
+                        <small class="float-right">
+                        <a
+                            class="btn btn-primary mr-2"
+                            href="{% url 'send_friend_request' user_p.id %}"
+                            >Add Friend</a
+                            >
+                        </small>
+                        {% else %}
+                        <small class="float-right">
+                        <a
+                            class="btn btn-warning mr-2"
+                            href="{% url 'cancel_friend_request' user_p.id %}"
+                            >Cancel Request</a
+                            >
+                        </small>
+                        {% endif %}
+                        <br /><br />
                     {% endfor %}
                 </div>
             </div>
             {% else %}
-            <h5>
-                <i
-                    >You have no friends now! Make some new
-                <a href="{% url 'users_list' %}">friends here!</a></i
-                    >
-            </h5>
+            <h5><i>No new people to add now! Please come back later!</i></h5>
             {% endif %}
         </div>
         <div class="col-md-4">
@@ -57,7 +62,7 @@
                 <a href="{{ request.user.profile.get_absolute_url }}"
                     ><img
                     class="card-img-top"
-                    src="{{ request.user.profile.image.url }}"
+                    src="{{ request.user.profile.get_image_url }}"
                     alt=""
                     /></a>
                 <div class="card-body">

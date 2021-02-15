@@ -1,42 +1,45 @@
 {% extends "feed/layout.html" %}
+{% load static %}
+{% block cssfiles %}
+{% endblock cssfiles %}
 {% block searchform %}
-<form
-    class="form-inline my-2 my-lg-0 ml-5"
-    action="{% url 'search_users' %}"
-    method="get"
-    >
-    <input name="q" type="text" placeholder="Search users.." />
-    <button class="btn btn-success my-2 my-sm-0 ml-4" type="submit">
-    Search
-    </button>
-</form>
-{% endblock searchform %}
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            {% if not users %}
-            <br /><br />
-            <h2><i>No such users found!</i></h2>
-            {% else %}
+            {% if friends %}
             <div class="card card-signin my-5">
                 <div class="card-body">
-                    {% for user_p in users %}
-                    <a href="{{ user_p.profile.get_absolute_url }}"
+                    {% for user_p in friends %}
+                    <a href="{{ user_p.get_absolute_url }}"
                         ><img
-                        src="{{ user_p.profile.image.url }}"
+                        src="{{ user_p.get_image_url }}"
                         class="rounded mr-2"
                         width="40"
                         height="40"
                         alt=""
                         /></a>
-                    <a class="text-dark" href="{{ user_p.profile.get_absolute_url }}"
+                    <a class="text-dark" href="{{ user_p.get_absolute_url }}"
                         ><b>{{ user_p }}</b></a
+                        >
+                    <small
+                        ><a
+                        class="btn btn-danger float-right"
+                        href="{% url 'delete_friend' user_p.id %}"
+                        >UnFriend</a
+                        ></small
                         >
                     <br /><br />
                     {% endfor %}
                 </div>
             </div>
+            {% else %}
+            <h5>
+                <i
+                    >You have no friends now! Make some new
+                <a href="{% url 'users_list' %}">friends here!</a></i
+                    >
+            </h5>
             {% endif %}
         </div>
         <div class="col-md-4">
@@ -44,7 +47,7 @@
                 <a href="{{ request.user.profile.get_absolute_url }}"
                     ><img
                     class="card-img-top"
-                    src="{{ request.user.profile.image.url }}"
+                    src="{{ request.user.profile.get_image_url }}"
                     alt=""
                     /></a>
                 <div class="card-body">
@@ -58,5 +61,5 @@
             </div>
         </div>
     </div>
-    {% endblock content %}
+    {% endblock content %} {% block jsfiles %}{% endblock jsfiles %}
 </div>
