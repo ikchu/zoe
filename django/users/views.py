@@ -9,8 +9,39 @@ from .models import Profile, FriendRequest
 from .forms import AddUserForm, UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
 import random
 
+from django.contrib.auth.models import User, Group
+from users.serializers import UserSerializer, GroupSerializer, ProfileSerializer
+from rest_framework import viewsets, permissions, status, generics
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.renderers import TemplateHTMLRenderer
+
 # Create your views here.
 User = get_user_model()
+
+# This is a ViewSet. See Tutorial 6 for the motivation
+class UserViewSet(viewsets.ModelViewSet):
+    # API endpoint that allows users to be viewed or edited.
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class GroupViewSet(viewsets.ModelViewSet):
+    # API endpoint that allows groups to be viewed or edited.
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+# This is a View. See Tutorial 3 for more.
+# This is less abstracted/clean than a ViewSet, but it offers more flexibility
+# With GroupSets there's no way to query only the current user's frieds...
+class FriendList(generics.ListAPIView):
+    serializer_class = ProfileSerializer
+
+    def get_queryset(self):
+        user = self.request.user.profile
+        friends = user.friends.all()
+        return friends
 
 @login_required
 def users_list(request):
@@ -205,20 +236,3 @@ def search_users(request):
             'users': object_list
     }
     return render(request, 'users/search_users.html', context)
-
-# from django.contrib.auth.models import User, Group
-# from rest_framework import viewsets
-# from rest_framework import permissions
-# from users.serializers import UserSerializer, GroupSerializer
-# 
-# class UserViewSet(viewsets.ModelViewSet):
-#     # API endpoint that allows users to be viewed or edited.
-#     queryset = User.objects.all().order_by('-date_joined')
-#     serializer_class = UserSerializer
-#     permission_classes = [permissions.IsAuthenticated]
-# 
-# class GroupViewSet(viewsets.ModelViewSet):
-#     # API endpoint that allows groups to be viewed or edited.
-#     queryset = Group.objects.all()
-#     serializer_class = GroupSerializer
-#     permission_classes = [permissions.IsAuthenticated]

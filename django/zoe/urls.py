@@ -1,33 +1,26 @@
-"""zoe URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import include, path
+from django.contrib.auth import views as auth_views
+
 from users import views as user_views
 from feed import views as feed_views
-from django.contrib.auth import views as auth_views
+
 from django.conf.urls.static import static
 from django.conf import settings
-# from rest_framework import routers
 
-# router = routers.DefaultRouter()
-# router.register(r'users', user_views.UserViewSet)
-# router.register(r'groups', user_views.GroupViewSet)
+from rest_framework import routers
 
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
+router = routers.DefaultRouter()
+router.register(r'users', user_views.UserViewSet)
+router.register(r'groups', user_views.GroupViewSet)
+
+rest_urls = [
+    path('', include(router.urls)),
+    path('auth/', include('rest_framework.urls',namespace='rest_framework')), 
+
+    path('friends/', user_views.FriendList.as_view(), name='rest_friend_list'),
+]
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/<slug>/', user_views.profile_view, name='profile_view'),
@@ -51,10 +44,9 @@ urlpatterns = [
     path('post/<int:pk>/', feed_views.post_detail, name='post-detail'),
     path('post/<int:pk>/update/', feed_views.PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete/', feed_views.post_delete, name='post-delete'),
-    path('user-posts/<str:username>', feed_views.UserPostListView.as_view(), name='user-posts')
+    path('user-posts/<str:username>', feed_views.UserPostListView.as_view(), name='user-posts'),
 
-    # path('', include(router.urls)),
-    # path('api-auth/', include('rest_framework.urls', namespace='rest_framework')), 
+    path('api/', include(rest_urls))
 ]
 
 if settings.DEBUG:
