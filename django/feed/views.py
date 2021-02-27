@@ -18,6 +18,7 @@ class PostListView(LoginRequiredMixin, ListView):
     template_name = 'feed/home.html'
     context_object_name = 'posts'
     ordering = ['-date_posted']
+    paginate_by = 1
 
 class UserPostListView(LoginRequiredMixin, ListView):
     model = Post
@@ -40,7 +41,7 @@ def post_detail(request, pk):
             data.post = post
             data.username = user
             data.save()
-            return redirect('post-detail', pk=pk)
+            return redirect('post_detail', pk=pk)
     else:
         form = NewCommentForm()
     return render(request, 'feed/post_detail.html', {'post':post, 'form':form})

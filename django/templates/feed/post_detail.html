@@ -22,8 +22,8 @@
                 {% endif %}
                 <div class="card-footer">
                     {% if post.user_name == user %}
-                    <a class="btn btn-outline-info mr-3" href="{% url 'post-update' post.id %}">Update</a>
-                    <a class="btn btn-outline-danger" href="{% url 'post-delete' post.id %}">Delete</a>
+                    <a class="btn btn-outline-info mr-3" href="{% url 'post_update' post.id %}">Update</a>
+                    <a class="btn btn-outline-danger" href="{% url 'post_delete' post.id %}">Delete</a>
                     {% endif %}
                 </div>
             </div>

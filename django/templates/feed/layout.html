@@ -18,7 +18,7 @@
                 <a class="navbar-brand ml-4 mr-4" href="{% url 'home' %}"><b>Zoe</b></a>
                 <div class="d-flex justify-content-right">
                     {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'post-create' %}"> <img src="{% static 'icons/image.svg' %}" alt="" width="30" height="30"/> </a>
+                    <a class="nav-item nav-link" href="{% url 'post_create' %}"> <img src="{% static 'icons/image.svg' %}" alt="" width="30" height="30"/> </a>
                     <a class="nav-item nav-link" href="{% url 'add_users' %}"> <img src="{% static 'icons/person-plus-fill.svg' %}" alt="" width="30" height="32"/> </a>
                     <a class="nav-item nav-link" href="{% url 'my_profile' %}"> <img src="{% static 'icons/person-circle.svg' %}" alt="" width="30" height="30"> </a>
                     <div class="nav-item dropdown">
