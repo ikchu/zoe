@@ -11,29 +11,19 @@ from .models import Post, Comment
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
-# Create your views here.
+# See Django Docs > Generic Display Views to understand how this type of view works
+# I omit the get_context_data() function because I don't need any context besides the posts themselves
 class PostListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'feed/home.html'
     context_object_name = 'posts'
     ordering = ['-date_posted']
-    paginate_by = 10
-    def get_context_data(self, **kwargs):
-        context = super(PostListView, self).get_context_data(**kwargs)
-        # I left out some code here that I won't use... now it doesn't really make sense
-        # to have this function defined... just return 
-        return context
 
 class UserPostListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'feed/user_posts.html'
     context_object_name = 'posts'
     paginate_by = 10
-
-    def get_context_data(self, **kwargs):
-        context = super(UserPostListView, self).get_context_data(**kwargs)
-        # same as note above... removed code so maybe don't need this def
-        return context
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))

@@ -3,7 +3,9 @@ from django.urls import include, path
 from django.contrib.auth import views as auth_views
 
 from users import views as user_views
+from users import rest_views as user_rest_views
 from feed import views as feed_views
+from feed import rest_views as feed_rest_views
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -11,14 +13,16 @@ from django.conf import settings
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r'users', user_views.UserViewSet)
-router.register(r'groups', user_views.GroupViewSet)
+router.register(r'users', user_rest_views.UserViewSet)
+router.register(r'groups', user_rest_views.GroupViewSet)
+router.register(r'posts', feed_rest_views.PostViewSet)
 
 rest_urls = [
+    # for any DjangoREST ViewSets
     path('', include(router.urls)),
     path('auth/', include('rest_framework.urls',namespace='rest_framework')), 
-
-    path('friends/', user_views.FriendList.as_view(), name='rest_friend_list'),
+    # for any djangoREST Views
+    path('friends/', user_rest_views.FriendList.as_view(), name='rest_friend_list'),
 ]
 
 urlpatterns = [

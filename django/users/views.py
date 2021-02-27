@@ -1,89 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User, Group
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from feed.models import Post
 from .models import Profile, FriendRequest
 from .forms import AddUserForm, UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
 import random
-
-from django.contrib.auth.models import User, Group
-from users.serializers import UserSerializer, GroupSerializer, ProfileSerializer
-from rest_framework import viewsets, permissions, status, generics
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.renderers import TemplateHTMLRenderer
-
-# Create your views here.
-User = get_user_model()
-
-# This is a ViewSet. See Tutorial 6 for the motivation
-class UserViewSet(viewsets.ModelViewSet):
-    # API endpoint that allows users to be viewed or edited.
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-class GroupViewSet(viewsets.ModelViewSet):
-    # API endpoint that allows groups to be viewed or edited.
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-# This is a View. See Tutorial 3 for more.
-# This is less abstracted/clean than a ViewSet, but it offers more flexibility
-# With GroupSets there's no way to query only the current user's frieds...
-class FriendList(generics.ListAPIView):
-    serializer_class = ProfileSerializer
-
-    def get_queryset(self):
-        user = self.request.user.profile
-        friends = user.friends.all()
-        return friends
-
-@login_required
-def users_list(request):
-    users = Profile.objects.exclude(user=request.user)
-    sent_friend_requests = FriendRequest.objects.filter(from_user=request.user)
-    sent_to = []
-    friends = []
-    # add all users on the entire site to friends
-    # NOTE: I don't understand why we need to go through each user and add their friends
-    # wouldnt the 'users' var already above already contain every user on the site?
-    # if that's the case, then the below loop is kinda useles and we could just do friends = users
-    for user in users:
-        user_friends = user.friends.all()
-        # filter out duplicates
-        for friend in user_friends:
-            if friend in friends:
-                user_friends = user_friends.exclude(user=friend.user)
-        friends += user_friends
-    my_friends = request.user.profile.friends.all()
-    # if any of this user's friends are in friends, remove them
-    for friend in my_friends:
-        if friend in friends:
-            friends.remove(friend)
-    # if this user himself is in friends, remove him
-    if request.user.profile in friends:
-        friends.remove(request.user.profile)
-    # select 10 random users from the list (if > 10 users exist)
-    random_list = random.sample(list(users), min(len(list(users)), 10))
-    for random_user in random_list:
-        if random_user in friends:
-            random_list.remove(random_user)
-    friends += random_list
-    for friend in my_friends:
-        if friend in friends:
-            friends.remove(friend)
-    for sent_request in sent_friend_requests:
-        sent_to.append(sent_request.to_user)
-    context = {
-            'users': friends,
-            'sent': sent_to
-    }
-    return render(request, 'users/users_list.html', context)
 
 # NOTE: why is login not required for this one?
 # I guess in the profile.html (the only tpl where this is called), we verify the user first
