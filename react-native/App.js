@@ -6,41 +6,68 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+
 import {
-  SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
   Text,
+  Image,
   StatusBar,
+  ActivityIndicator,
+  FlatList,
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 function HomeScreen() {
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch('http://192.168.1.188:8888/api/posts/?format=json')
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Home!</Text>
-    </View>
+    <SafeAreaView
+      style={{flex: 1, justifyContent: 'space-between', alignItems: 'center'}}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>Home!</Text>
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <FlatList
+            data={data}
+            keyExtractor={({description}, index) => description}
+            renderItem={({item}) => (
+              <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <Text> {item.user_name} </Text>
+                <Text> {item.description} </Text>
+                <Image source={{uri: item.pic}} style={{width: 300, height: 300}} />
+              </View>
+            )}
+          />
+        )}
+      </View>
+    </SafeAreaView>
   );
 }
 
 function SettingsScreen() {
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Settings!</Text>
-    </View>
+    <SafeAreaView
+      style={{flex: 1, justifyContent: 'space-between', alignItems: 'center'}}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>Settings!</Text>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -48,15 +75,17 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName="Home">
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
 }
+
 const App: () => React$Node = () => {
   return (
     <SafeAreaProvider>
+      <StatusBar barStyle="dark-content" />
       <NavigationContainer>
         <MyTabs />
       </NavigationContainer>
@@ -65,41 +94,14 @@ const App: () => React$Node = () => {
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#000000',
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  textStyle: {
+    textAlign: 'center',
+    marginBottom: 8,
   },
 });
 
