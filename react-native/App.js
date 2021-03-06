@@ -13,6 +13,7 @@ import {
   ScrollView,
   View,
   Text,
+  TextInput,
   Image,
   StatusBar,
   ActivityIndicator,
@@ -23,12 +24,40 @@ import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
+function LoginScreen() {
+  return (
+    <SafeAreaView
+      style={{flex: 1, justifyContent: 'space-between', alignItems: 'center'}}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>Login</Text>
+        <TextInput
+          autoCapitalize='none'
+          autoCorrect={false}
+          autoFocus={true}
+          keyboardType='ascii-capable'
+          placeholder='username'>
+        </TextInput>
+        <TextInput
+          autoCapitalize='none'
+          autoCorrect={false}
+          enablesReturnKeyAutomatically={true}
+          keyboardType='ascii-capable'
+          onSubmitEditing={HomeScreen}
+          placeholder='password'
+          returnKeyType='go'
+          secureTextEntry={true}>
+        </TextInput>
+      </View>
+    </SafeAreaView>
+  );
+}
+
 function HomeScreen() {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('http://192.168.1.188:8888/api/posts/?format=json')
+    fetch('http://127.0.0.1:8888/api/posts/?format=json')
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error))
@@ -75,7 +104,8 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
-    <Tab.Navigator initialRouteName="Home">
+    <Tab.Navigator initialRouteName="Login">
+      <Tab.Screen name="Login" component={LoginScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
