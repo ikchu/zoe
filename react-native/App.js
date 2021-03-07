@@ -18,6 +18,7 @@ import {
   StatusBar,
   ActivityIndicator,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
@@ -25,29 +26,47 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 function LoginScreen() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
-    <SafeAreaView
-      style={{flex: 1, justifyContent: 'space-between', alignItems: 'center'}}>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.loginView}>
         <Text>Login</Text>
+      </View>
+      <View style={styles.loginView}>
         <TextInput
           autoCapitalize='none'
           autoCorrect={false}
           autoFocus={true}
           keyboardType='ascii-capable'
-          placeholder='username'>
-        </TextInput>
+          onChangeText={(username) => setUsername(username)}
+          placeholder='username'
+          style={styles.loginInput}
+        />
+      </View>
+      <View style={styles.loginView}>
         <TextInput
           autoCapitalize='none'
           autoCorrect={false}
           enablesReturnKeyAutomatically={true}
           keyboardType='ascii-capable'
-          onSubmitEditing={HomeScreen}
+          onChangeText={(password) => setPassword(password)}
           placeholder='password'
           returnKeyType='go'
-          secureTextEntry={true}>
-        </TextInput>
+          secureTextEntry={true}
+          style={styles.loginInput}
+        />
       </View>
+      <TouchableOpacity style={styles.forgotButton}>
+        <Text>Forgot Password?</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.forgotButton}>
+        <Text>Create New Account</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.loginButton}>
+        <Text>Login</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -125,13 +144,45 @@ const App: () => React$Node = () => {
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#000000',
   },
   textStyle: {
-    textAlign: 'center',
     marginBottom: 8,
+    textAlign: 'center',
+  },
+  loginView: {
+    alignItems: 'center',
+    borderRadius: 30,
+    height: 45,
+    marginBottom: 20,
+    width: '70%',
+  },
+  loginInput: {
+    alignItems: 'center',
+    borderColor: '#000000',
+    borderStyle: 'solid',
+    borderWidth: StyleSheet.hairlineWidth,
+    color: '#000000',
+    flex: 1,
+    height: 50,
+    padding: 10,
+    width: '80%',
+  },
+  forgotButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 30,
+  },
+  loginButton: {
+    alignItems: 'center',
+    backgroundColor: '#CCCCCC',
+    borderRadius: 25,
+    height: 30,
+    justifyContent: 'center',
+    marginTop: 40,
+    width: '20%',
   },
 });
 
