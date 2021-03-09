@@ -18,7 +18,7 @@ import {
   StatusBar,
   ActivityIndicator,
   FlatList,
-  TouchableOpacity,
+  Pressable,
 } from 'react-native';
 
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
@@ -26,47 +26,58 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 function LoginScreen() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const usernameInputHandler = (e) => {
+    setUsername(e);
+  };
+
+  const passwordInputHandler = (e) => {
+    setPassword(e);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.loginView}>
         <Text>Login</Text>
       </View>
+      <View>
+        <Text>Username: {username}</Text>
+        <Text>Password: {password}</Text>
+      </View>
       <View style={styles.loginView}>
         <TextInput
-          autoCapitalize='none'
+          autoCapitalize="none"
           autoCorrect={false}
-          autoFocus={true}
-          keyboardType='ascii-capable'
-          onChangeText={(username) => setUsername(username)}
-          placeholder='username'
+          keyboardType="ascii-capable"
+          onChangeText={usernameInputHandler}
+          placeholder="Username"
           style={styles.loginInput}
         />
       </View>
       <View style={styles.loginView}>
         <TextInput
-          autoCapitalize='none'
+          autoCapitalize="none"
           autoCorrect={false}
           enablesReturnKeyAutomatically={true}
-          keyboardType='ascii-capable'
-          onChangeText={(password) => setPassword(password)}
-          placeholder='password'
-          returnKeyType='go'
+          keyboardType="ascii-capable"
+          onChangeText={passwordInputHandler}
+          placeholder="Password"
+          returnKeyType="go"
           secureTextEntry={true}
           style={styles.loginInput}
         />
       </View>
-      <TouchableOpacity style={styles.forgotButton}>
+      <Pressable style={styles.forgotButton}>
         <Text>Forgot Password?</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.forgotButton}>
+      </Pressable>
+      <Pressable style={styles.forgotButton}>
         <Text>Create New Account</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.loginButton}>
+      </Pressable>
+      <Pressable style={styles.loginButton}>
         <Text>Login</Text>
-      </TouchableOpacity>
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -76,7 +87,7 @@ function HomeScreen() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8888/api/posts/?format=json')
+    fetch('http://192.168.1.188:8888/api/posts/?format=json')
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error))
@@ -84,9 +95,8 @@ function HomeScreen() {
   }, []);
 
   return (
-    <SafeAreaView
-      style={{flex: 1, justifyContent: 'space-between', alignItems: 'center'}}>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <SafeAreaView>
+      <View>
         <Text>Home!</Text>
         {isLoading ? (
           <ActivityIndicator />
@@ -95,10 +105,13 @@ function HomeScreen() {
             data={data}
             keyExtractor={({description}, index) => description}
             renderItem={({item}) => (
-              <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <View>
                 <Text> {item.user_name} </Text>
                 <Text> {item.description} </Text>
-                <Image source={{uri: item.pic}} style={{width: 300, height: 300}} />
+                <Image
+                  source={{uri: item.pic}}
+                  style={{width: 300, height: 300}}
+                />
               </View>
             )}
           />
@@ -110,9 +123,8 @@ function HomeScreen() {
 
 function SettingsScreen() {
   return (
-    <SafeAreaView
-      style={{flex: 1, justifyContent: 'space-between', alignItems: 'center'}}>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <SafeAreaView>
+      <View>
         <Text>Settings!</Text>
       </View>
     </SafeAreaView>
