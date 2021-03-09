@@ -6,6 +6,8 @@ from users import views as user_views
 from users import rest_views as user_rest_views
 from feed import views as feed_views
 from feed import rest_views as feed_rest_views
+from messenger import views as messenger_views
+# from messenger import rest_views as messenger_rest_views
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -51,6 +53,8 @@ urlpatterns = [
     path('post/<int:pk>/update/', feed_views.PostUpdateView.as_view(), name='post_update'),
     path('post/<int:pk>/delete/', feed_views.post_delete, name='post_delete'),
     path('user-posts/<str:username>', feed_views.UserPostListView.as_view(), name='user_posts'),
+
+    path('messenger/', messenger_views.MessageListView.as_view(), name='messenger'),
 
     path('api/', include(rest_urls))
 ]
