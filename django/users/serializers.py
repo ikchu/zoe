@@ -7,6 +7,22 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ['url', 'username', 'email', 'groups']
 
+class CreateUserSerializer(serializers.HyperlinkedModelSerializer):
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True, style={'input_type': 'password'})
+
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+        write_only_fields = ['password']
+        read_only_fields = ['is_staff', 'is_superuser', 'is_active']
+
+        def create(self, validated_data):
+            user = super(CreateUserSerializer, self).create(validated_data)
+            user.set_password(validated_data['password'])
+            user.save()
+            return user
+
 class ProfileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Profile

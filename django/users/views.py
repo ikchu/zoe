@@ -82,7 +82,7 @@ def profile_view(request, slug):
     user = profile.user
     sent_friend_requests = FriendRequest.objects.filter(from_user=user)
     received_friend_requests = FriendRequest.objects.filter(to_user=user)
-    user_posts = Post.objects.filter(user_name=user)
+    user_posts = Post.objects.filter(user=user)
     friends = profile.friends.all()
     button_status = 'none'
     # if this user is not our friend
@@ -141,7 +141,7 @@ def my_profile(request):
     profile = request.user.profile
     sent_friend_requests = FriendRequest.objects.filter(from_user=user)
     received_friend_requests = FriendRequest.objects.filter(to_user=user)
-    user_posts = Post.objects.filter(user_name=user)
+    user_posts = Post.objects.filter(user=user)
     friends = profile.friends.all()
     context = {
             'user': user,

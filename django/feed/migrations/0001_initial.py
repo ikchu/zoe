@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('pic', models.ImageField(upload_to='images')),
                 ('date_posted', models.DateTimeField(default=django.utils.timezone.now)),
                 ('tags', models.CharField(blank=True, max_length=100)),
-                ('user_name', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(

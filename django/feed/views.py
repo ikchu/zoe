@@ -28,7 +28,7 @@ class UserPostListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Post.objects.filter(user_name=user).order_by('-date_posted')
+        return Post.objects.filter(user=user).order_by('-date_posted')
 
 @login_required
 def post_detail(request, pk):
@@ -53,7 +53,7 @@ def create_post(request):
         form = NewPostForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.save(commit=False)
-            data.user_name = user
+            data.user = user
             data.save()
             messages.success(request, 'Posted Successfully')
             return redirect('home')
@@ -67,19 +67,19 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'feed/create_post.html'
 
     def form_valid(self, form):
-        form.instance.user_name = self.request.user
+        form.instance.user = self.request.user
         return super().form_valid(form)
 
     def test_func(self):
         post = self.get_object()
-        if self.request.user == post.user_name:
+        if self.request.user == post.user:
             return True
         return False
 
 @login_required
 def post_delete(request, pk):
     post = Post.objects.get(pk=pk)
-    if request.user == post.user_name:
+    if request.user == post.user:
         Post.objects.get(pk=pk).delete()
     return redirect('home')
 

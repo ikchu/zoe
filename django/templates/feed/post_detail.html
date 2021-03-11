@@ -9,8 +9,8 @@
         <div class="col-md-8">
             <div class="card card-signin my-5">
                 <div class="card-body">
-                    <a href="{{ post.user_name.profile.get_absolute_url }}"><img src="{{ post.user_name.profile.get_image_url }}" class="rounded-circle" width="30" height="30" alt=""></a>
-                    <a class="text-dark" href="{{ post.user_name.profile.get_absolute_url }}"><b>{{ post.user_name }}</b></a>
+                    <a href="{{ post.user.profile.get_absolute_url }}"><img src="{{ post.user.profile.get_image_url }}" class="rounded-circle" width="30" height="30" alt=""></a>
+                    <a class="text-dark" href="{{ post.user.profile.get_absolute_url }}"><b>{{ post.user }}</b></a>
                     <br><small class="text-muted">Posted on {{ post.date_posted }}</small>
                     <br><br>
                     <p class="card-text text-dark">{{ post.description }}</p>
@@ -21,7 +21,7 @@
                 <p class="text-danger ml-3"><b>Tags: <i>{{ post.tags }}</i></b></p>
                 {% endif %}
                 <div class="card-footer">
-                    {% if post.user_name == user %}
+                    {% if post.user == user %}
                     <a class="btn btn-outline-info mr-3" href="{% url 'post_update' post.id %}">Update</a>
                     <a class="btn btn-outline-danger" href="{% url 'post_delete' post.id %}">Delete</a>
                     {% endif %}
