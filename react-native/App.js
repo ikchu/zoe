@@ -7,39 +7,18 @@
  */
 
 import React from 'react';
+import {enableScreens} from 'react-native-screens';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-import {StyleSheet, StatusBar} from 'react-native';
+import TabNavigator from './navigation/TabNavigator';
 
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
-import LoginScreen from './screens/LoginScreen';
-import HomeScreen from './screens/HomeScreen';
-import SettingsScreen from './screens/SettingsScreen';
-
-const Tab = createBottomTabNavigator();
-
-function MyTabs() {
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle="dark-content" />
-      <NavigationContainer>
-        <Tab.Navigator initialRouteName="Login">
-          <Tab.Screen name="Login" component={LoginScreen} />
-          <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Settings" component={SettingsScreen} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
-  );
-}
+// Small optimization: react-navigation will use native, optimized screen components for android/ios
+// Good practice to do this for any react-native project
+enableScreens();
 
 const App: () => React$Node = () => {
-  // return <LoginScreen />;
-  return <MyTabs />;
+  // return <TabNavigator />;
+  return <Icon name="rocket" size={30} color="#900" />;
 };
-
-const styles = StyleSheet.create({});
 
 export default App;

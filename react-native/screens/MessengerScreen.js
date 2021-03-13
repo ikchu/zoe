@@ -3,14 +3,14 @@ import {View, Text} from 'react-native';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-function SettingsScreen() {
+function MessengerScreen() {
   return (
     <SafeAreaView>
       <View>
-        <Text>Settings!</Text>
+        <Text>Messenger!</Text>
       </View>
     </SafeAreaView>
   );
 }
 
-export default SettingsScreen;
+export default MessengerScreen;

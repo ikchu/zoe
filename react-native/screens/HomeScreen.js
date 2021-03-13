@@ -33,8 +33,7 @@ function HomeScreen() {
         ) : (
           <FlatList
             data={data}
-            // I think this uses post description as key?? Can't guarantee uniqueness
-            keyExtractor={({description}, index) => description}
+            keyExtractor={(item) => item.id.toString()}
             renderItem={({item}) => <PostCard post={item} />}
           />
         )}
@@ -51,6 +50,7 @@ const styles = StyleSheet.create({
   feedContainer: {
     flex: 1,
     width: '90%',
+    marginLeft: 40, // TEMPORARY SO TEXT ISN'T BLOCKED BY SCREE GLITCH
   },
   image: {
     width: 300,
