@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
+import Colors from '../constants/colors';
+
 const Description = (props) => {
   return (
     <View style={styles.textBox}>
@@ -11,11 +13,11 @@ const Description = (props) => {
 
 const styles = StyleSheet.create({
   textBox: {
-    marginBottom: 10,
+    marginBottom: 0,
   },
   text: {
     fontSize: 12,
-    color: 'white',
+    color: Colors.light,
   },
 });
 

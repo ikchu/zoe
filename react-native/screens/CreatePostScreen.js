@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-function CreatePostScreen() {
+const CreatePostScreen = (props) => {
   return (
     <SafeAreaView>
       <View>
@@ -11,6 +11,6 @@ function CreatePostScreen() {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 export default CreatePostScreen;

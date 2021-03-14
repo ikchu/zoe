@@ -11,8 +11,8 @@ const ImageCard = (props) => {
 
 const styles = StyleSheet.create({
   card: {
-    height: 100,
-    width: 100,
+    height: '100%',
+    width: '100%',
   },
   image: {
     height: '100%',

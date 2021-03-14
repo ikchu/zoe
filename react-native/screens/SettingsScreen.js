@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-function SettingsScreen() {
+const SettingsScreen = (props) => {
   return (
     <SafeAreaView>
       <View>
@@ -11,6 +11,6 @@ function SettingsScreen() {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 export default SettingsScreen;

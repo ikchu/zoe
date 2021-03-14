@@ -13,7 +13,7 @@ const Name = (props) => {
 
 const styles = StyleSheet.create({
   textBox: {
-    marginBottom: 10,
+    marginBottom: 0,
   },
   text: {
     fontSize: 15,

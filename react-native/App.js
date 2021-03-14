@@ -8,7 +8,6 @@
 
 import React from 'react';
 import {enableScreens} from 'react-native-screens';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import TabNavigator from './navigation/TabNavigator';
 
@@ -17,8 +16,7 @@ import TabNavigator from './navigation/TabNavigator';
 enableScreens();
 
 const App: () => React$Node = () => {
-  // return <TabNavigator />;
-  return <Icon name="rocket" size={30} color="#900" />;
+  return <TabNavigator />;
 };
 
 export default App;

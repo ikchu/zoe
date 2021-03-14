@@ -1,10 +1,9 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
 import ImageCard from './ImageCard';
 import Name from './Name';
 import Description from './Description';
-import Colors from '../constants/colors';
 
 const PostCard = (props) => {
   return (
@@ -20,15 +19,13 @@ const PostCard = (props) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.light,
-    flexDirection: 'row',
-    height: 100,
-    marginVertical: 2,
     width: '100%',
+    height: '100%',
   },
   details: {
-    paddingLeft: 15,
-    paddingTop: 10,
+    alignItems: 'center',
+    paddingTop: 5,
+    width: '100%',
   },
 });
 

@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-function MessengerScreen() {
+const MessengerScreen = (props) => {
   return (
     <SafeAreaView>
       <View>
@@ -11,6 +11,6 @@ function MessengerScreen() {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 export default MessengerScreen;

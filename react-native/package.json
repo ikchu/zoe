@@ -20,6 +20,7 @@
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.18.0",
+    "react-native-vector-icons": "^8.1.0",
     "react-test-renderer": "16.13.1",
     "reanimated": "0.0.1-alpha",
     "typescript": "^4.2.2",
