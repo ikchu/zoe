@@ -7,16 +7,30 @@
  */
 
 import React from 'react';
+import {AppRegistry} from 'react-native';
 import {enableScreens} from 'react-native-screens';
 
-import TabNavigator from './navigation/TabNavigator';
+import {createStore, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+import authReducer from './store/reducers/auth.js';
+
+const rootReducer = combineReducers({ar: authReducer});
+const store = createStore(rootReducer);
+
+import AuthNavigator from './navigation/AuthNavigator';
 
 // Small optimization: react-navigation will use native, optimized screen components for android/ios
 // Good practice to do this for any react-native project
 enableScreens();
 
 const App: () => React$Node = () => {
-  return <TabNavigator />;
+  return (
+    <Provider store={store}>
+      <AuthNavigator />
+    </Provider>
+  );
 };
+
+AppRegistry.registerComponent('main', () => App);
 
 export default App;

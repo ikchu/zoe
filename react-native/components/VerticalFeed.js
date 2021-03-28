@@ -7,24 +7,23 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import Header from './Header';
 import PostCard from './PostCard';
+
+import API from '../axios/api';
 
 const VerticalFeed = (props) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('http://192.168.1.188:8888/api/posts/?format=json')
-      .then((response) => response.json())
-      .then((json) => setData(json))
+    API.get('/posts/')
+      .then((response) => setData(response.data))
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
   }, []);
 
   return (
     <View style={styles.feedContainer}>
-      <Header>All Posts</Header>
       {isLoading ? (
         <ActivityIndicator />
       ) : (
@@ -35,7 +34,9 @@ const VerticalFeed = (props) => {
           renderItem={({item}) => {
             return (
               <Pressable
-                onPress={() => props.navigation.navigate('Details')}
+                onPress={() =>
+                  props.navigation.navigate('Details', {post: item})
+                }
                 style={styles.pressable}>
                 <PostCard post={item} />
               </Pressable>
@@ -48,16 +49,12 @@ const VerticalFeed = (props) => {
 };
 
 const styles = StyleSheet.create({
-  pressable: {
-    margin: 10,
-    marginBottom: 40,
-    flex: 1,
-    height: 170,
-    alignItems: 'center',
-  },
   feedContainer: {
     flex: 1,
-    width: '90%',
+    width: '100%',
+  },
+  pressable: {
+    flex: 1,
   },
 });
 

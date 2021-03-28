@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
-import {Pressable, Text, StyleSheet} from 'react-native';
+import {Pressable, StyleSheet} from 'react-native';
+
+import MontserratR from '../components/text/MontserratR';
+import Colors from '../constants/colors';
 
 const SmallTextButton = (props) => {
   const [pressed, setPressed] = useState(false);
@@ -9,19 +12,20 @@ const SmallTextButton = (props) => {
       // onPress={props.onPress}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}>
-      <Text style={pressed ? styles.pressed : styles.unpressed}>
+      <MontserratR style={pressed ? styles.pressed : styles.unpressed}>
         {props.text}
-      </Text>
+      </MontserratR>
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   pressed: {
-    color: 'royalblue',
+    color: Colors.c1,
+    opacity: 0.8,
   },
   unpressed: {
-    color: 'cornflowerblue',
+    color: Colors.c1,
   },
 });
 

@@ -1,4 +1,12 @@
 {
-  "name": "zoe",
-  "displayName": "zoe"
+    "name": "zoe",
+    "displayName": "zoe",
+    "expo": {
+        "name": "zoe",
+        "slug": "zoe",
+        "version": "1.0.0",
+        "assetBundlePatterns": [
+            "**/*"
+        ]
+    }
 }

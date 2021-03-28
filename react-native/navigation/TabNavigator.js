@@ -1,6 +1,4 @@
 import React from 'react';
-import {StatusBar, StyleSheet} from 'react-native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -35,36 +33,25 @@ const screenOptions = ({route}) => ({
 const tabBarOptions = {
   activeTintColor: 'white',
   inactiveTintColor: 'white',
-  activeBackgroundColor: Colors.light,
-  inactiveBackgroundColor: Colors.light,
   showLabel: false,
-  style: {backgroundColor: Colors.light},
+  style: {backgroundColor: Colors.c4},
 };
 
 const TabNavigator = () => {
   return (
-    <SafeAreaProvider style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" />
-      <NavigationContainer>
-        <Tab.Navigator
-          initialRouteName="Home"
-          screenOptions={screenOptions}
-          tabBarOptions={tabBarOptions}>
-          <Tab.Screen name="Home" component={HomeStackNavigator} />
-          <Tab.Screen name="Events" component={EventsScreen} />
-          <Tab.Screen name="Messenger" component={MessengerScreen} />
-          <Tab.Screen name="Notifications" component={NotificationsScreen} />
-          <Tab.Screen name="Profile" component={ProfileScreen} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName="Login"
+        screenOptions={screenOptions}
+        tabBarOptions={tabBarOptions}>
+        <Tab.Screen name="Home" component={HomeStackNavigator} />
+        <Tab.Screen name="Events" component={EventsScreen} />
+        <Tab.Screen name="Messenger" component={MessengerScreen} />
+        <Tab.Screen name="Notifications" component={NotificationsScreen} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  safeArea: {
-    color: Colors.light,
-  },
-});
 
 export default TabNavigator;

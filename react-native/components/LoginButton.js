@@ -1,10 +1,13 @@
 import React from 'react';
 import {Pressable, Text, StyleSheet} from 'react-native';
 
+import Colors from '../constants/colors';
+
 const LoginButton = (props) => {
   return (
     <Pressable
-      style={({pressed}) => (pressed ? styles.buttonPressed : styles.button)}>
+      style={({pressed}) => (pressed ? styles.buttonPressed : styles.button)}
+      {...props}>
       <Text style={styles.text}>LOG IN</Text>
     </Pressable>
   );
@@ -13,7 +16,7 @@ const LoginButton = (props) => {
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    backgroundColor: '#967154',
+    backgroundColor: Colors.c4,
     borderRadius: 10,
     height: 50,
     justifyContent: 'center',
@@ -22,7 +25,7 @@ const styles = StyleSheet.create({
   },
   buttonPressed: {
     alignItems: 'center',
-    backgroundColor: '#967154',
+    backgroundColor: Colors.c4,
     borderRadius: 10,
     height: 50,
     justifyContent: 'center',
@@ -31,7 +34,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   text: {
-    color: 'white',
+    color: Colors.c1,
     fontWeight: 'bold',
   },
 });

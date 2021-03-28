@@ -21,6 +21,7 @@ router = routers.DefaultRouter()
 router.register(r'logout', user_rest_views.LogoutUserViewSet)
 router.register(r'users', user_rest_views.UserViewSet)
 router.register(r'groups', user_rest_views.GroupViewSet)
+router.register(r'profiles', user_rest_views.ProfileViewSet)
 router.register(r'posts', feed_rest_views.PostViewSet)
 
 rest_urls = [
@@ -30,7 +31,7 @@ rest_urls = [
     # for any djangoREST Views
     path('friends/', user_rest_views.FriendList.as_view(), name='rest_friend_list'),
     path('login/', obtain_auth_token, name='user_login'),
-    path('register', user_rest_views.CreateUser.as_view(), name='user_create'),
+    path('register/', user_rest_views.CreateUser.as_view(), name='user_create'),
 ]
 
 urlpatterns = [

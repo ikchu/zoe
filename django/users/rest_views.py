@@ -14,6 +14,7 @@ https://www.django-rest-framework.org/tutorial/3-class-based-views
 """
 
 from django.contrib.auth.models import User, Group
+from users.models import Profile
 from users.serializers import UserSerializer, CreateUserSerializer, GroupSerializer, ProfileSerializer
 from rest_framework import viewsets, permissions, status, generics
 from rest_framework.authtoken.models import Token
@@ -30,6 +31,11 @@ class UserViewSet(viewsets.ModelViewSet):
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 # for more on View, see Django REST Tutorial 3

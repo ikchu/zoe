@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
 
+import Colors from '../constants/colors';
+
 const LoginInput = (props) => {
   return (
     <View style={styles.outerContainer}>
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     alignItems: 'center',
-    backgroundColor: '#C6AB92',
+    backgroundColor: Colors.c3,
     borderRadius: 10,
     justifyContent: 'center',
     height: 50,
@@ -33,7 +35,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   loginInput: {
-    color: 'white',
+    color: Colors.c1,
     flex: 1,
     width: '90%',
   },

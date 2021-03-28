@@ -7,8 +7,12 @@ import Description from './Description';
 
 const PostCard = (props) => {
   return (
-    <View style={styles.card}>
-      <ImageCard uri={props.post.pic} />
+    <View style={styles.container}>
+      <ImageCard
+        uri={props.post.pic}
+        cardStyle={styles.imageContainer}
+        resizeMode="cover"
+      />
       <View style={styles.details}>
         <Name>{props.post.user.username}</Name>
         <Description>{props.post.description}</Description>
@@ -18,9 +22,14 @@ const PostCard = (props) => {
 };
 
 const styles = StyleSheet.create({
-  card: {
+  container: {
+    marginHorizontal: 10,
+    alignItems: 'center',
+    height: 230,
+  },
+  imageContainer: {
+    height: 170,
     width: '100%',
-    height: '100%',
   },
   details: {
     alignItems: 'center',
