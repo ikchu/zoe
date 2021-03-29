@@ -8,18 +8,18 @@ import {
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import LoginInput from '../components/LoginInput';
-import AuthButton from '../components/AuthButton';
-import SmallTextButton from '../components/SmallTextButton';
-import AbhayaSB from '../components/text/AbhayaSB';
-import MontserratR from '../components/text/MontserratR';
+import LoginInput from '../../components/auth/LoginInput';
+import AuthButton from '../../components/auth/AuthButton';
+import SmallTextButton from '../../components/auth/SmallTextButton';
+import AbhayaSB from '../../components/text/AbhayaSB';
+import MontserratR from '../../components/text/MontserratR';
 
 import {useDispatch} from 'react-redux';
-import {signIn} from '../store/actions/auth';
+import {signIn} from '../../store/actions/auth';
 
-import Colors from '../constants/colors';
+import Colors from '../../constants/colors';
 
-import API from '../axios/api';
+import API from '../../axios/api';
 
 const LoginScreen = ({navigation}) => {
   const [username, setUsername] = useState('');

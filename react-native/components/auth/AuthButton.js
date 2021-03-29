@@ -1,8 +1,8 @@
 import React from 'react';
 import {Pressable, StyleSheet} from 'react-native';
 
-import Colors from '../constants/colors';
-import MontserratBC from './text/MontserratBC';
+import Colors from '../../constants/colors';
+import MontserratBC from '../text/MontserratBC';
 
 const AuthButton = (props) => {
   return (

@@ -1,10 +1,8 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
-import {SafeAreaView} from 'react-native-safe-area-context';
-
-import VerticalFeed from '../components/VerticalFeed';
-import Header from '../components/Header';
+import VerticalFeed from '../../components/posts/VerticalFeed';
+import Header from '../../components/Header';
 
 const PostsScreen = ({navigation}) => {
   return (

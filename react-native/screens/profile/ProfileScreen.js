@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import ProfileHeader from '../components/ProfileHeader.js';
+import ProfileHeader from '../../components/profile/ProfileHeader.js';
 
 // Temp: hardcoding a user for styling, since I don't have auth/redux set up
 // TODO: get actual current user, probably from redux after login/authentication

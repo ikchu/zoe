@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
 
-import MontserratR from '../components/text/MontserratR';
-import Colors from '../constants/colors';
+import MontserratR from '../text/MontserratR';
+import Colors from '../../constants/colors';
 
 const SmallTextButton = (props) => {
   const [pressed, setPressed] = useState(false);

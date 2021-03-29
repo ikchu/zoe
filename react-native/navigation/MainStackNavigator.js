@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../screens/HomeScreen';
 import ProfileStackNavigator from './ProfileStackNavigator';
@@ -18,20 +17,18 @@ const screenOptions = {
 
 const MainStackNavigator = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={screenOptions}>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen name="Profile" component={ProfileStackNavigator} />
-        <Stack.Screen name="Messages" component={MessagesStackNavigator} />
-        <Stack.Screen name="Posts" component={PostsStackNavigator} />
-        <Stack.Screen name="Experiences" component={ExperiencesStackNavigator} />
-        <Stack.Screen name="Settings" component={SettingsStackNavigator} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="Profile" component={ProfileStackNavigator} />
+      <Stack.Screen name="Messages" component={MessagesStackNavigator} />
+      <Stack.Screen name="Posts" component={PostsStackNavigator} />
+      <Stack.Screen name="Experiences" component={ExperiencesStackNavigator} />
+      <Stack.Screen name="Settings" component={SettingsStackNavigator} />
+    </Stack.Navigator>
   );
 };
 

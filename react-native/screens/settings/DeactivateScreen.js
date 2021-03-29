@@ -3,14 +3,14 @@ import {View, Text} from 'react-native';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const SettingsScreen = (props) => {
+const DeactivateScreen = (props) => {
   return (
     <SafeAreaView>
       <View>
-        <Text>Settings!</Text>
+        <Text>Deactivate Account</Text>
       </View>
     </SafeAreaView>
   );
 };
 
-export default SettingsScreen;
+export default DeactivateScreen;

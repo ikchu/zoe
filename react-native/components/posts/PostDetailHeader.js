@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
-import Name from './Name';
+import Name from '../Name';
 import Description from './Description';
 import ImageCard from './ImageCard';
 
-const ProfileHeader = (props) => {
+const PostDetailHeader = (props) => {
   if (props.user.profile.image === null) {
     props.user.profile.image =
       'http://192.168.1.188:8888/static/img/default.png';
@@ -19,9 +19,8 @@ const ProfileHeader = (props) => {
         style={styles.image}
       />
       <View style={styles.name}>
-        <Name style={{fontSize: 25}}>{props.user.username}</Name>
+        <Name>{props.user.username}</Name>
         <Description>Location PlaceHolder</Description>
-        <Description>{props.user.profile.bio}</Description>
       </View>
     </View>
   );
@@ -29,32 +28,24 @@ const ProfileHeader = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: 'red',
-    borderWidth: 1,
     flexDirection: 'row',
-    height: 120,
-    justifyContent: 'space-between',
+    height: 50,
   },
   imageContainer: {
-    borderColor: 'green',
-    borderWidth: 1,
-    width: 120,
-    height: 120,
+    width: 50,
+    height: 50,
   },
   image: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     borderWidth: StyleSheet.hairlineWidth,
   },
   name: {
-    borderColor: 'blue',
-    borderWidth: 1,
     flex: 1,
-    // justifyContent: 'center',
-    paddingTop: 10,
-    paddingLeft: 20,
+    justifyContent: 'center',
+    paddingLeft: 10,
   },
 });
 
-export default ProfileHeader;
+export default PostDetailHeader;

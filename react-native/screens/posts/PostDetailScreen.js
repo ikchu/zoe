@@ -1,10 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
-import {SafeAreaView} from 'react-native-safe-area-context';
-
-import PostDetailHeader from '../components/PostDetailHeader';
-import ImageCard from '../components/ImageCard';
+import PostDetailHeader from '../../components/posts/PostDetailHeader';
+import ImageCard from '../../components/posts/ImageCard';
 
 const PostDetailScreen = ({route, navigation}) => {
   const {post} = route.params;

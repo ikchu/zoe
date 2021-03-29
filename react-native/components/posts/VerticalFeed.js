@@ -9,7 +9,7 @@ import {
 
 import PostCard from './PostCard';
 
-import API from '../axios/api';
+import API from '../../axios/api';
 
 const VerticalFeed = (props) => {
   const [isLoading, setLoading] = useState(true);

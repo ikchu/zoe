@@ -26,7 +26,7 @@ enableScreens();
 const App: () => React$Node = () => {
   return (
     <Provider store={store}>
-      <StatusBar barStyle="light-content" />
+      {/* <StatusBar barStyle="light-content" /> */}
       <AuthNavigator />
     </Provider>
   );

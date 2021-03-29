@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
 import ImageCard from './ImageCard';
-import Name from './Name';
+import Name from '../Name';
 import Description from './Description';
 
 const PostCard = (props) => {
