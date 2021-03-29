@@ -1,14 +1,15 @@
 import React from 'react';
-import {Pressable, Text, StyleSheet} from 'react-native';
+import {Pressable, StyleSheet} from 'react-native';
 
 import Colors from '../constants/colors';
+import MontserratBC from './text/MontserratBC';
 
-const LoginButton = (props) => {
+const AuthButton = (props) => {
   return (
     <Pressable
       style={({pressed}) => (pressed ? styles.buttonPressed : styles.button)}
       {...props}>
-      <Text style={styles.text}>LOG IN</Text>
+      <MontserratBC>{props.children}</MontserratBC>
     </Pressable>
   );
 };
@@ -33,10 +34,6 @@ const styles = StyleSheet.create({
     opacity: 0.8,
     width: '80%',
   },
-  text: {
-    color: Colors.c1,
-    fontWeight: 'bold',
-  },
 });
 
-export default LoginButton;
+export default AuthButton;

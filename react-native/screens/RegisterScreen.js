@@ -10,7 +10,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 import LoginInput from '../components/LoginInput';
 import AuthButton from '../components/AuthButton';
-import SmallTextButton from '../components/SmallTextButton';
 import AbhayaSB from '../components/text/AbhayaSB';
 import MontserratR from '../components/text/MontserratR';
 
@@ -21,10 +20,18 @@ import Colors from '../constants/colors';
 
 import API from '../axios/api';
 
-const LoginScreen = ({navigation}) => {
+const RegisterScreen = (props) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const nameInputHandler = (e) => {
+    setName(e);
+  };
+  const emailInputHandler = (e) => {
+    setEmail(e);
+  };
   const usernameInputHandler = (e) => {
     setUsername(e);
   };
@@ -34,16 +41,24 @@ const LoginScreen = ({navigation}) => {
 
   const dispatch = useDispatch();
 
-  const signInHandler = useCallback(
+  // NOTE: don't do this here because we still need to go to the 'Last Q' screen before redirecting to homepage
+  // if we set a token here, we'll automatically be redirected to home page
+  // I think what I'll do is save the inputs (name, email, username, password) in redux vars then only post in 'Last Q' page
+  const registerHandler = useCallback(
     (data) => {
-      API.post('/login/', {username: username, password: password})
+      API.post('/register/', {
+        first_name: name,
+        email: email,
+        username: username,
+        password: password,
+      })
         .then((response) => {
           const {token} = response.data;
           dispatch(signIn(token));
         })
         .catch((error) => console.log(error));
     },
-    [dispatch, password, username],
+    [dispatch, email, name, password, username],
   );
 
   return (
@@ -52,10 +67,20 @@ const LoginScreen = ({navigation}) => {
         <Pressable
           style={styles.loginScreen}
           onPress={() => Keyboard.dismiss()}>
-          <AbhayaSB>Welcome!</AbhayaSB>
+          <AbhayaSB>Create Account</AbhayaSB>
           <MontserratR style={styles.subHeader}>
-            Log into your existing account.
+            Enter your details and start connecting with your friends.
           </MontserratR>
+          <LoginInput
+            placeholder="Full name"
+            onChangeText={nameInputHandler}
+            returnKeyType="next"
+          />
+          <LoginInput
+            placeholder="Email"
+            onChangeText={emailInputHandler}
+            returnKeyType="next"
+          />
           <LoginInput
             placeholder="Username"
             onChangeText={usernameInputHandler}
@@ -66,11 +91,7 @@ const LoginScreen = ({navigation}) => {
             onChangeText={passwordInputHandler}
             secureTextEntry
           />
-          <AuthButton onPress={() => signInHandler()}>Log In</AuthButton>
-          <SmallTextButton>Forgot Password?</SmallTextButton>
-          <SmallTextButton onPress={() => navigation.navigate('Register')}>
-            Create an Account
-          </SmallTextButton>
+          <AuthButton onPress={() => registerHandler()}>Sign Up</AuthButton>
         </Pressable>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -92,4 +113,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default RegisterScreen;

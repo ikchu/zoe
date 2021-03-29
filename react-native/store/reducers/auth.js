@@ -6,6 +6,8 @@ const initialState = {
   userToken: null,
 };
 
+// TODO: doesn't look like these tokens are being saved with SecureStore....
+// how to change token to be stored with SecureStore rather than plain redux?
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case RESTORE_TOKEN:

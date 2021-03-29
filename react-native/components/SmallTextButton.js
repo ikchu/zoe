@@ -11,9 +11,10 @@ const SmallTextButton = (props) => {
     <Pressable
       // onPress={props.onPress}
       onPressIn={() => setPressed(true)}
-      onPressOut={() => setPressed(false)}>
+      onPressOut={() => setPressed(false)}
+      {...props}>
       <MontserratR style={pressed ? styles.pressed : styles.unpressed}>
-        {props.text}
+        {props.children}
       </MontserratR>
     </Pressable>
   );

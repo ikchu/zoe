@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   text: {
     color: Colors.c1,
     fontFamily: 'Montserrat-Bold',
-    fontSize: 10,
+    fontSize: 12,
     textTransform: 'uppercase',
   },
 });

@@ -1,10 +1,10 @@
 import React, {useEffect, useCallback} from 'react';
-import {StatusBar, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {useSelector, useDispatch} from 'react-redux';
 
+import AuthStackNavigator from './AuthStackNavigator';
 import TabNavigator from './TabNavigator';
-import LoginScreen from '../screens/LoginScreen';
 import Colors from '../constants/colors';
 
 import {restoreToken} from '../store/actions/auth.js';
@@ -37,8 +37,7 @@ const AuthNavigator = () => {
 
   return (
     <SafeAreaProvider style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" />
-      {userToken == null ? <LoginScreen /> : <TabNavigator />}
+      {userToken == null ? <AuthStackNavigator /> : <TabNavigator />}
     </SafeAreaProvider>
   );
 };

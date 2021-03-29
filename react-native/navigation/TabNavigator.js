@@ -31,8 +31,8 @@ const screenOptions = ({route}) => ({
 });
 
 const tabBarOptions = {
-  activeTintColor: 'white',
-  inactiveTintColor: 'white',
+  activeTintColor: Colors.c1,
+  inactiveTintColor: Colors.c1,
   showLabel: false,
   style: {backgroundColor: Colors.c4},
 };

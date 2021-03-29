@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import {AppRegistry} from 'react-native';
+import {StatusBar, AppRegistry} from 'react-native';
 import {enableScreens} from 'react-native-screens';
 
 import {createStore, combineReducers} from 'redux';
@@ -26,6 +26,7 @@ enableScreens();
 const App: () => React$Node = () => {
   return (
     <Provider store={store}>
+      <StatusBar barStyle="light-content" />
       <AuthNavigator />
     </Provider>
   );
