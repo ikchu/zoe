@@ -65,7 +65,7 @@ const RegisterScreen = (props) => {
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView behavior="padding">
         <Pressable
-          style={styles.loginScreen}
+          style={styles.registerScreen}
           onPress={() => Keyboard.dismiss()}>
           <AbhayaSB>Create Account</AbhayaSB>
           <MontserratR style={styles.subHeader}>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   safeArea: {
     backgroundColor: Colors.c2,
   },
-  loginScreen: {
+  registerScreen: {
     alignItems: 'center',
     height: '100%',
     justifyContent: 'center',

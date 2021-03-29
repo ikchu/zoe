@@ -9,7 +9,6 @@ const SmallTextButton = (props) => {
 
   return (
     <Pressable
-      // onPress={props.onPress}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
       {...props}>

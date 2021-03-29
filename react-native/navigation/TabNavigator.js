@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import HomeStackNavigator from '../navigation/HomeStackNavigator';
+import PostsStackNavigator from './PostsStackNavigator';
 import EventsScreen from '../screens/EventsScreen';
 import MessengerScreen from '../screens/MessengerScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
@@ -44,7 +44,7 @@ const TabNavigator = () => {
         initialRouteName="Login"
         screenOptions={screenOptions}
         tabBarOptions={tabBarOptions}>
-        <Tab.Screen name="Home" component={HomeStackNavigator} />
+        <Tab.Screen name="Home" component={PostsStackNavigator} />
         <Tab.Screen name="Events" component={EventsScreen} />
         <Tab.Screen name="Messenger" component={MessengerScreen} />
         <Tab.Screen name="Notifications" component={NotificationsScreen} />

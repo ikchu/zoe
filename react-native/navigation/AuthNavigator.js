@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import AuthStackNavigator from './AuthStackNavigator';
 import TabNavigator from './TabNavigator';
+import MainStackNavigator from './MainStackNavigator';
 import Colors from '../constants/colors';
 
 import {restoreToken} from '../store/actions/auth.js';
@@ -37,7 +38,7 @@ const AuthNavigator = () => {
 
   return (
     <SafeAreaProvider style={styles.safeArea}>
-      {userToken == null ? <AuthStackNavigator /> : <TabNavigator />}
+      {userToken == null ? <AuthStackNavigator /> : <MainStackNavigator />}
     </SafeAreaProvider>
   );
 };
