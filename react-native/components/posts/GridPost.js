@@ -5,7 +5,7 @@ import ImageCard from './ImageCard';
 import Name from '../Name';
 import Description from './Description';
 
-const PostCard = (props) => {
+const GridPost = (props) => {
   return (
     <View style={styles.container}>
       <ImageCard
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostCard;
+export default GridPost;

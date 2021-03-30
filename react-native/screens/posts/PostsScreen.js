@@ -1,27 +1,9 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
 
-import VerticalFeed from '../../components/posts/VerticalFeed';
-import Header from '../../components/Header';
+import VerticalListFeed from '../../components/posts/VerticalListFeed';
 
 const PostsScreen = ({navigation}) => {
-  return (
-    <View style={styles.container}>
-      <Header style={styles.headerStyle}>All Posts</Header>
-      <VerticalFeed navigation={navigation} />
-    </View>
-  );
+  return <VerticalListFeed navigation={navigation} />;
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: '100%',
-    padding: 10,
-  },
-  headerStyle: {
-    marginLeft: 10,
-  },
-});
 
 export default PostsScreen;

@@ -10,8 +10,6 @@ target 'zoe' do
 
   use_react_native!(:path => config["reactNativePath"])
 
-  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
-
   target 'zoeTests' do
     inherit! :complete
     # Pods for testing

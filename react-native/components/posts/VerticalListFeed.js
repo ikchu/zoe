@@ -7,11 +7,11 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import PostCard from './PostCard';
-
+import ListPost from './ListPost';
 import API from '../../axios/api';
+import Colors from '../../constants/colors';
 
-const VerticalFeed = (props) => {
+const VerticalListFeed = (props) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
@@ -30,7 +30,7 @@ const VerticalFeed = (props) => {
         <FlatList
           data={data}
           keyExtractor={(item) => item.id.toString()}
-          numColumns={2}
+          numColumns={1}
           renderItem={({item}) => {
             return (
               <Pressable
@@ -38,7 +38,7 @@ const VerticalFeed = (props) => {
                   props.navigation.navigate('Details', {post: item})
                 }
                 style={styles.pressable}>
-                <PostCard post={item} />
+                <ListPost post={item} />
               </Pressable>
             );
           }}
@@ -50,12 +50,14 @@ const VerticalFeed = (props) => {
 
 const styles = StyleSheet.create({
   feedContainer: {
+    backgroundColor: Colors.c1,
     flex: 1,
-    width: '100%',
+    // width: '100%',
+    padding: 20,
   },
   pressable: {
     flex: 1,
   },
 });
 
-export default VerticalFeed;
+export default VerticalListFeed;

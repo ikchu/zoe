@@ -10,27 +10,15 @@ import AboutScreen from '../screens/settings/AboutScreen';
 import FeedbackScreen from '../screens/settings/FeedbackScreen';
 import SupportScreen from '../screens/settings/SupportScreen';
 
-import Colors from '../constants/colors';
+import screenOptions from '../constants/header';
 
 const Stack = createStackNavigator();
-
-const screenOptions = {
-  headerLeftContainerStyle: {
-    paddingLeft: 12,
-  },
-  headerBackTitleVisible: false,
-  headerTintColor: Colors.c4,
-  headerTitleStyle: {
-    fontFamily: 'AbhayaLibre-SemiBold',
-    fontSize: 20,
-  },
-};
 
 const SettingsStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="Settings" component={SettingsScreen} />
-      <Stack.Screen name="Notificatons" component={NotificationsScreen} />
+      <Stack.Screen name="Notifications" component={NotificationsScreen} />
       <Stack.Screen name="Deactivate" component={DeactivateScreen} />
       <Stack.Screen name="Timer" component={TimerScreen} />
       <Stack.Screen name="Help" component={HelpScreen} />
