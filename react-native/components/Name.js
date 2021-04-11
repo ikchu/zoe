@@ -1,12 +1,15 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
 import Colors from '../constants/colors';
+import AbhayaSB from '../components/text/AbhayaSB';
 
 const Name = (props) => {
   return (
     <View style={styles.textBox}>
-      <Text style={{...styles.text, ...props.style}}>{props.children}</Text>
+      <AbhayaSB style={{...styles.text, ...props.style}}>
+        {props.children}
+      </AbhayaSB>
     </View>
   );
 };

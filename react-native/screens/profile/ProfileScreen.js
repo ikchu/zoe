@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -32,7 +31,6 @@ const ProfileScreen = (props) => {
       <View>
         <Text>My Experiences</Text>
       </View>
-      <Text>{useSelector((state) => state.ar.userToken)}</Text>
     </SafeAreaView>
   );
 };

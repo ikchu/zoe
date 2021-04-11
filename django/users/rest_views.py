@@ -15,10 +15,12 @@ https://www.django-rest-framework.org/tutorial/3-class-based-views
 
 from django.contrib.auth.models import User, Group
 from users.models import Profile
-from users.serializers import UserSerializer, CreateUserSerializer, GroupSerializer, ProfileSerializer
+from users.serializers import UserSerializer, GroupSerializer, ProfileSerializer
 from rest_framework import viewsets, permissions, status, generics
 from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 # for more on ViewSet, see Django REST Tutorial 6
 # ViewSet to get all users
@@ -40,7 +42,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
 # for more on View, see Django REST Tutorial 3
 # View to get all friends of current user
-class FriendList(generics.ListAPIView):
+class FriendListAPIView(generics.ListAPIView):
     serializer_class = ProfileSerializer
 
     def get_queryset(self):
@@ -48,8 +50,8 @@ class FriendList(generics.ListAPIView):
         friends = user.friends.all()
         return friends
 
-class CreateUser(generics.CreateAPIView):
-    serializer_class = CreateUserSerializer
+class CreateUserAPIView(generics.CreateAPIView):
+    serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
 
     def create(self, request, *args, **kwargs):
@@ -61,9 +63,11 @@ class CreateUser(generics.CreateAPIView):
         token_data = {'token': token.key}
         return Response({**serializer.data, **token_data}, status=status.HTTP_201_CREATED, headers=headers)
         
-class LogoutUserViewSet(viewsets.ModelViewSet):
+class LogoutUserAPIView(APIView):
     queryset = User.objects.all()
     
     def get(self, request, format=None):
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
+
+    permission_classes = [permissions.IsAuthenticated]

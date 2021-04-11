@@ -13,12 +13,12 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from rest_framework import routers
-from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework.authtoken.views import ObtainAuthToken
 
 router = routers.DefaultRouter()
 # NOTE: idk why, but the order here matters. it put logout after users, it affects the posts api...
 # if logout is after, then posts api will have post.user as /api/logout/<userid> rather than /api/users/<userid>
-router.register(r'logout', user_rest_views.LogoutUserViewSet)
+# router.register(r'logout', user_rest_views.LogoutUserViewSet)
 router.register(r'users', user_rest_views.UserViewSet)
 router.register(r'groups', user_rest_views.GroupViewSet)
 router.register(r'profiles', user_rest_views.ProfileViewSet)
@@ -29,9 +29,10 @@ rest_urls = [
     path('', include(router.urls)),
     path('auth/', include('rest_framework.urls',namespace='rest_framework')), 
     # for any djangoREST Views
-    path('friends/', user_rest_views.FriendList.as_view(), name='rest_friend_list'),
-    path('login/', obtain_auth_token, name='user_login'),
-    path('register/', user_rest_views.CreateUser.as_view(), name='user_create'),
+    path('friends/', user_rest_views.FriendListAPIView.as_view(), name='rest_friend_list'),
+    path('login/', ObtainAuthToken.as_view(), name='user_login'),
+    path('logout/', user_rest_views.LogoutUserAPIView.as_view(), name='user_logout'),
+    path('register/', user_rest_views.CreateUserAPIView.as_view(), name='user_create'),
 ]
 
 urlpatterns = [

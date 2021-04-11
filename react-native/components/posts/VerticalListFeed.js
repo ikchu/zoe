@@ -6,6 +6,7 @@ import {
   Pressable,
   StyleSheet,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 
 import ListPost from './ListPost';
 import API from '../../axios/api';
@@ -15,12 +16,14 @@ const VerticalListFeed = (props) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
+  const token = useSelector((state) => state.ar.token);
+
   useEffect(() => {
-    API.get('/posts/')
+    API.get('/posts/', {headers: {Authorization: `Token ${token}`}})
       .then((response) => setData(response.data))
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, []);
+  }, [token]);
 
   return (
     <View style={styles.feedContainer}>

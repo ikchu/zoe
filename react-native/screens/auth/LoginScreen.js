@@ -37,8 +37,9 @@ const LoginScreen = ({navigation}) => {
   const signInHandler = useCallback(
     (data) => {
       API.post('/login/', {username: username, password: password})
-        .then((response) => {
+        .then(async (response) => {
           const {token} = response.data;
+          // await SecureStore.setItemAsync('token', token);
           dispatch(signIn(token));
         })
         .catch((error) => console.log(error));
@@ -66,7 +67,7 @@ const LoginScreen = ({navigation}) => {
             onChangeText={passwordInputHandler}
             secureTextEntry
           />
-          <AuthButton onPress={() => signInHandler()}>Log In</AuthButton>
+          <AuthButton onPress={signInHandler}>Log In</AuthButton>
           <SmallTextButton>Forgot Password?</SmallTextButton>
           <SmallTextButton onPress={() => navigation.navigate('Register')}>
             Create an Account
