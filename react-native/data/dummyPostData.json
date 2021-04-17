@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "description": "fake description",
+        "pic": "http://192.168.1.188:8888/media/images/fakeImageName.filetype",
+        "date_posted": "yyyy-mm-ddThh:mm:ss.ddddddZ",
+        "user": "fakeUsername"
+    },
+    {
+        "id": 2,
+        "description": "My first post!",
+        "pic": "http://192.168.1.188:8888/media/images/p017.jpg",
+        "date_posted": "2021-02-27T09:25:39.729081Z",
+        "user": "ikaiachu"
+    }
+]
