@@ -7,7 +7,7 @@ from users import rest_views as user_rest_views
 from feed import views as feed_views
 from feed import rest_views as feed_rest_views
 from messenger import views as messenger_views
-# from messenger import rest_views as messenger_rest_views
+from messenger import rest_views as messenger_rest_views
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -16,13 +16,12 @@ from rest_framework import routers
 from rest_framework.authtoken.views import ObtainAuthToken
 
 router = routers.DefaultRouter()
-# NOTE: idk why, but the order here matters. it put logout after users, it affects the posts api...
-# if logout is after, then posts api will have post.user as /api/logout/<userid> rather than /api/users/<userid>
-# router.register(r'logout', user_rest_views.LogoutUserViewSet)
 router.register(r'users', user_rest_views.UserViewSet)
 router.register(r'groups', user_rest_views.GroupViewSet)
 router.register(r'profiles', user_rest_views.ProfileViewSet)
 router.register(r'posts', feed_rest_views.PostViewSet)
+router.register(r'messages', messenger_rest_views.MessageViewSet, basename='message')
+router.register(r'conversations', messenger_rest_views.ConversationViewSet, basename='conversation')
 
 rest_urls = [
     # for any DjangoREST ViewSets

@@ -1,8 +1,14 @@
 from django.db import models
-from django.conf import settings
+from django.contrib.auth.models import User
+from django.utils import timezone
+
+class Conversation(models.Model):
+    members = models.ManyToManyField(User, related_name='conversations')
+    name = models.CharField(max_length=50)
+    read = models.BooleanField(default=False)
 
 class Message(models.Model):
-    to_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='message_to_user', on_delete=models.CASCADE)
-    from_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='message_from_user', on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    conversation = models.ForeignKey(Conversation, related_name='messages', on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now)
     message = models.CharField(max_length=1000)

@@ -27,7 +27,8 @@ from rest_framework.views import APIView
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 # ViewSet to get all groups
 class GroupViewSet(viewsets.ModelViewSet):
