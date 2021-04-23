@@ -23,15 +23,26 @@ router.register(r'posts', feed_rest_views.PostViewSet)
 router.register(r'messages', messenger_rest_views.MessageViewSet, basename='message')
 router.register(r'conversations', messenger_rest_views.ConversationViewSet, basename='conversation')
 
-rest_urls = [
-    # for any DjangoREST ViewSets
-    path('', include(router.urls)),
-    path('auth/', include('rest_framework.urls',namespace='rest_framework')), 
-    # for any djangoREST Views
+other_rest_urls = [
     path('friends/', user_rest_views.FriendListAPIView.as_view(), name='rest_friend_list'),
     path('login/', ObtainAuthToken.as_view(), name='user_login'),
     path('logout/', user_rest_views.LogoutUserAPIView.as_view(), name='user_logout'),
     path('register/', user_rest_views.CreateUserAPIView.as_view(), name='user_create'),
+]
+
+authrouter = routers.DefaultRouter()
+authrouter.register(r'messages', messenger_rest_views.AuthMessageViewSet, basename='auth-message')
+authrouter.register(r'conversations', messenger_rest_views.AuthConversationViewSet, basename='auth-conversation')
+
+auth_rest_urls = [
+    path('', include('rest_framework.urls',namespace='rest_framework')),
+    path('', include(authrouter.urls)),
+]
+
+rest_urls = [
+    path('', include(router.urls)),
+    path('', include(other_rest_urls)),
+    path('auth/', include(auth_rest_urls)), 
 ]
 
 urlpatterns = [

@@ -17,18 +17,38 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Q
 from messenger.models import Message, Conversation
 from messenger.serializers import MessageSerializer, ConversationSerializer
+from messenger.permissions import MessagePermission
 from rest_framework import viewsets, permissions, status, generics
 
 class MessageViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated, MessagePermission]
     serializer_class = MessageSerializer
 
-    # only show messages that are in this user's conversations
     def get_queryset(self):
-        return Message.objects.filter(conversation__in=self.request.user.conversations.all()).order_by('-timestamp')
+        """
+        This view should return a list of all the messages to or from
+        the currently authenticated user, including those from group 
+        conversations which the user is a member of.
+        """
+        user = self.request.user
+        return Message.objects.filter(conversation__in=user.conversations.all()).order_by('-timestamp')
 
 class ConversationViewSet(viewsets.ModelViewSet):
     serializer_class = ConversationSerializer
 
-    # only show this user's conversations
     def get_queryset(self):
+        """
+        This view should return a list of all the conversations that
+        include the currently authenticated user
+        """
         return self.request.user.conversations
+
+class AuthMessageViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAdminUser]
+    serializer_class = MessageSerializer
+    queryset = Message.objects.all()
+
+class AuthConversationViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAdminUser]
+    serializer_class = ConversationSerializer
+    queryset = Conversation.objects.all()
