@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User, Group
+from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from feed.models import Post
@@ -24,7 +24,7 @@ def add_users(request):
     if request.method == 'POST':
         form = AddUserForm(request.POST)
         if form.is_valid():
-            to_user = User.objects.filter(username=form.cleaned_data.get('to_user'))
+            to_user = get_user_model().objects.filter(username=form.cleaned_data.get('to_user'))
             if to_user.exists():
                 FriendRequest.objects.create(to_user=to_user.first(), from_user=request.user)
         return redirect('add_users')
@@ -34,14 +34,14 @@ def add_users(request):
 
 @login_required
 def cancel_friend_request(request, id):
-    user = get_object_or_404(User, id=id)
+    user = get_object_or_404(get_user_model(), id=id)
     friend_request = FriendRequest.objects.filter(from_user=request.user, to_user=user).first()
     friend_request.delete()
     return HttpResponseRedirect(f'/users/{user.profile.slug}')
 
 @login_required
 def accept_friend_request(request, id):
-    from_user = get_object_or_404(User, id=id)
+    from_user = get_object_or_404(get_user_model(), id=id)
     # NOTE: instead of using filter().first() from here on, could we use get()?? might be cleaner
     friend_request = FriendRequest.objects.filter(from_user=from_user, to_user=request.user).first()
     user1 = friend_request.to_user
@@ -59,7 +59,7 @@ def accept_friend_request(request, id):
 
 @login_required
 def delete_friend_request(request, id):
-    from_user = get_object_or_404(User, id=id)
+    from_user = get_object_or_404(get_user_model(), id=id)
     friend_request = FriendRequest.objects.filter(from_user=from_user, to_user=request.user).first()
     friend_request.delete()
     return HttpResponseRedirect(f'/users/{request.user.profile.slug}')
@@ -155,7 +155,7 @@ def my_profile(request):
 @login_required
 def search_users(request):
     query = request.GET.get('q')
-    object_list = User.objects.filter(username__icontains=query)
+    object_list = get_user_model().objects.filter(username__icontains=query)
     context = {
             'users': object_list
     }

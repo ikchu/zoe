@@ -8,6 +8,7 @@ from feed import views as feed_views
 from feed import rest_views as feed_rest_views
 from messenger import views as messenger_views
 from messenger import rest_views as messenger_rest_views
+from friendship import rest_views as friendship_rest_views
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -17,11 +18,11 @@ from rest_framework.authtoken.views import ObtainAuthToken
 
 router = routers.DefaultRouter()
 router.register(r'users', user_rest_views.UserViewSet)
-router.register(r'groups', user_rest_views.GroupViewSet)
 router.register(r'profiles', user_rest_views.ProfileViewSet)
 router.register(r'posts', feed_rest_views.PostViewSet)
 router.register(r'messages', messenger_rest_views.MessageViewSet, basename='message')
 router.register(r'conversations', messenger_rest_views.ConversationViewSet, basename='conversation')
+router.register(r'friends', friendship_rest_views.FriendViewSet, basename='friend')
 
 other_rest_urls = [
     path('friends/', user_rest_views.FriendListAPIView.as_view(), name='rest_friend_list'),

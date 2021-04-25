@@ -13,7 +13,6 @@ For more information on View, see
 https://www.django-rest-framework.org/tutorial/3-class-based-views
 """
 
-from django.contrib.auth.models import User, Group
 from django.db.models import Q
 from messenger.models import Message, Conversation
 from messenger.serializers import MessageSerializer, ConversationSerializer

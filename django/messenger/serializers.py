@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from messenger.models import Message, Conversation
 from rest_framework import serializers
 
@@ -7,6 +6,15 @@ class ConversationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Conversation
         fields = ['url', 'name', 'members', 'messages']
+
+    def validate_members(self, value):
+        user = self.context['request'].user
+        for member in value:
+            if member not in user.friends:
+                raise serializers.ValidationError('You must be friends with all members of the conversation')
+        return value
+
+    # def create(self, validated_data):
 
 class MessageSerializer(serializers.HyperlinkedModelSerializer):
 

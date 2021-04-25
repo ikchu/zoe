@@ -13,9 +13,9 @@ For more information on View, see
 https://www.django-rest-framework.org/tutorial/3-class-based-views
 """
 
-from django.contrib.auth.models import User, Group
+from django.contrib.auth import get_user_model
 from users.models import Profile
-from users.serializers import UserSerializer, GroupSerializer, ProfileSerializer
+from users.serializers import UserSerializer, ProfileSerializer
 from rest_framework import viewsets, permissions, status, generics
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -25,16 +25,9 @@ from rest_framework.views import APIView
 # for more on ViewSet, see Django REST Tutorial 6
 # ViewSet to get all users
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all().order_by('-date_joined')
+    queryset = get_user_model().objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    # permission_classes = [permissions.IsAuthenticated]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-# ViewSet to get all groups
-class GroupViewSet(viewsets.ModelViewSet):
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
@@ -65,7 +58,7 @@ class CreateUserAPIView(generics.CreateAPIView):
         return Response({**serializer.data, **token_data}, status=status.HTTP_201_CREATED, headers=headers)
         
 class LogoutUserAPIView(APIView):
-    queryset = User.objects.all()
+    queryset = get_user_model().objects.all()
     
     def get(self, request, format=None):
         request.user.auth_token.delete()

@@ -1,8 +1,8 @@
 import os
 from pathlib import Path
 from django.db import models
-from django.contrib.auth.models import User
 from django.urls import reverse
+from django.conf import settings
 from django.utils import timezone
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,7 +12,7 @@ class Post(models.Model):
     description = models.CharField(max_length=255, blank=True)
     pic = models.ImageField(upload_to='images')
     date_posted = models.DateTimeField(default=timezone.now)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # maybe we don't want to have tags? either you know the user or you dont... no stalking
     tags = models.CharField(max_length=100, blank=True)
 
@@ -24,6 +24,6 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='details', on_delete=models.CASCADE)
-    username = models.ForeignKey(User, related_name='details', on_delete=models.CASCADE)
+    username = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='details', on_delete=models.CASCADE)
     comment = models.CharField(max_length=255)
     comment_date = models.DateTimeField(default=timezone.now)

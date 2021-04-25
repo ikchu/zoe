@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth import get_user_model
 from users.models import Profile
 from rest_framework import serializers
 
@@ -7,17 +7,12 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
         model = Profile
         fields = ['url', 'image']
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Group
-        fields = ['url', 'name']
-
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     password = serializers.CharField(write_only=True, style={'input_type': 'password'})
 
     class Meta:
-        model = User
-        fields = ['url', 'first_name', 'email', 'username', 'password']
+        model = get_user_model()
+        fields = ['url', 'name', 'email', 'username', 'password', 'friends']
 
     def create(self, validated_data):
         user = super(UserSerializer, self).create(validated_data)
