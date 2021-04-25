@@ -26,7 +26,7 @@ from friendship.signals import (
     friendship_request_viewed,
 )
 
-AUTH_USER_MODEL = getattr(settings, "AUTH_USER_MODEL", "auth.User")
+AUTH_USER_MODEL = settings.AUTH_USER_MODEL
 
 CACHE_TYPES = {
     "friends": "f-%s",

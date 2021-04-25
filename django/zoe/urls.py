@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.urls import include, path
 from django.contrib.auth import views as auth_views
 
-from users import views as user_views
 from users import rest_views as user_rest_views
 from feed import views as feed_views
 from feed import rest_views as feed_rest_views
@@ -17,46 +16,44 @@ from rest_framework import routers
 from rest_framework.authtoken.views import ObtainAuthToken
 
 router = routers.DefaultRouter()
-router.register(r'users', user_rest_views.UserViewSet)
-router.register(r'profiles', user_rest_views.ProfileViewSet)
+router.register(r'users', user_rest_views.UserViewSet, basename='customuser')
+router.register(r'profiles', user_rest_views.ProfileViewSet, basename='profile')
 router.register(r'posts', feed_rest_views.PostViewSet)
 router.register(r'messages', messenger_rest_views.MessageViewSet, basename='message')
 router.register(r'conversations', messenger_rest_views.ConversationViewSet, basename='conversation')
-router.register(r'friends', friendship_rest_views.FriendViewSet, basename='friend')
+router.register(r'friendships', friendship_rest_views.FriendshipViewSet, basename='friend')
 
 other_rest_urls = [
-    path('friends/', user_rest_views.FriendListAPIView.as_view(), name='rest_friend_list'),
     path('login/', ObtainAuthToken.as_view(), name='user_login'),
     path('logout/', user_rest_views.LogoutUserAPIView.as_view(), name='user_logout'),
-    path('register/', user_rest_views.CreateUserAPIView.as_view(), name='user_create'),
 ]
 
 authrouter = routers.DefaultRouter()
-authrouter.register(r'messages', messenger_rest_views.AuthMessageViewSet, basename='auth-message')
-authrouter.register(r'conversations', messenger_rest_views.AuthConversationViewSet, basename='auth-conversation')
+authrouter.register(r'users', user_rest_views.AuthUserViewSet)
+authrouter.register(r'messages', messenger_rest_views.AuthMessageViewSet)
+authrouter.register(r'conversations', messenger_rest_views.AuthConversationViewSet)
 
 auth_rest_urls = [
     path('', include('rest_framework.urls',namespace='rest_framework')),
     path('', include(authrouter.urls)),
 ]
 
+"""
+Because the auth routers and the regular routers use the same models, their URLs end
+up having the same names (ex. customuser-detail, message-list, etc.). This is problematic
+because we won't know which URL an object's url field will end up point to.
+I found a hack: by adding auth urls above regular urls in the urlpatterns, the objects will
+use the regular URL for their url field (desired). 
+Maybe the root problem can be fixed by changing basenames? I need to investigate...
+"""
 rest_urls = [
+    path('auth/', include(auth_rest_urls)), 
     path('', include(router.urls)),
     path('', include(other_rest_urls)),
-    path('auth/', include(auth_rest_urls)), 
 ]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/<slug>/', user_views.profile_view, name='profile_view'),
-    path('friends/', user_views.friend_list, name='friend_list'),
-    path('add-users/', user_views.add_users, name='add_users'),
-    path('users/friend-request/accept/<int:id>/', user_views.accept_friend_request, name='accept_friend_request'),
-    path('users/friend-request/delete/<int:id>/', user_views.delete_friend_request, name='delete_friend_request'),
-    path('users/friend/delete/<int:id>/', user_views.delete_friend, name='delete_friend'),
-    path('edit-profile/', user_views.edit_profile, name='edit_profile'),
-    path('my-profile/', user_views.my_profile, name='my_profile'),
-    path('register/', user_views.register, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('password-reset/', auth_views.PasswordResetView.as_view(template_name='users/request_password_reset.html'), name='password_reset'),

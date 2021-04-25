@@ -1,3 +1,4 @@
+from friendship.models import Friend
 from messenger.models import Message, Conversation
 from rest_framework import serializers
 
@@ -10,7 +11,7 @@ class ConversationSerializer(serializers.HyperlinkedModelSerializer):
     def validate_members(self, value):
         user = self.context['request'].user
         for member in value:
-            if member not in user.friends:
+            if member != user and member not in Friend.objects.friends(user):
                 raise serializers.ValidationError('You must be friends with all members of the conversation')
         return value
 

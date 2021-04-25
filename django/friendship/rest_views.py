@@ -1,10 +1,10 @@
 from django.contrib.auth import get_user_model
 from friendship.models import Friend
-from friendship.serializers import FriendSerializer
+from friendship.serializers import FriendshipSerializer
 from rest_framework import viewsets, permissions
 
-class FriendViewSet(viewsets.ModelViewSet):
-    serializer_class = FriendSerializer
+class FriendshipViewSet(viewsets.ModelViewSet):
+    serializer_class = FriendshipSerializer
 
     def get_queryset(self):
         """
