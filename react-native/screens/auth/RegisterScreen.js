@@ -46,8 +46,8 @@ const RegisterScreen = (props) => {
   // I think what I'll do is save the inputs (name, email, username, password) in redux vars then only post in 'Last Q' page
   const registerHandler = useCallback(
     (data) => {
-      API.post('/register/', {
-        first_name: name,
+      API.post('/users/', {
+        name: name,
         email: email,
         username: username,
         password: password,

@@ -8,6 +8,7 @@ import PostsStackNavigator from './PostsStackNavigator';
 import MessagesStackNavigator from './MessagesStackNavigator';
 import ExperiencesStackNavigator from './ExperiencesStackNavigator';
 import SettingsStackNavigator from './SettingsStackNavigator';
+import TabNavigator from './TabNavigator';
 
 const Stack = createStackNavigator();
 
@@ -23,11 +24,12 @@ const MainStackNavigator = () => {
         component={HomeScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Profile" component={ProfileStackNavigator} />
+      <Stack.Screen name="TabNav" component={TabNavigator} />
+      {/* <Stack.Screen name="Profile" component={ProfileStackNavigator} />
       <Stack.Screen name="Messages" component={MessagesStackNavigator} />
       <Stack.Screen name="Posts" component={PostsStackNavigator} />
       <Stack.Screen name="Experiences" component={ExperiencesStackNavigator} />
-      <Stack.Screen name="Settings" component={SettingsStackNavigator} />
+      <Stack.Screen name="Settings" component={SettingsStackNavigator} /> */}
     </Stack.Navigator>
   );
 };

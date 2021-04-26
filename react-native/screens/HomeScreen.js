@@ -11,27 +11,27 @@ const HomeScreen = ({navigation}) => {
       <NavButton
         iconName="person"
         text="Profile"
-        onPress={() => navigation.navigate('Profile')}
+        onPress={() => navigation.navigate('TabNav', {screen: 'Profile'})}
       />
       <NavButton
         iconName="chatbubble"
         text="Messages"
-        onPress={() => navigation.navigate('Messages')}
+        onPress={() => navigation.navigate('TabNav', {screen: 'Messenger'})}
       />
       <NavButton
         iconName="camera"
         text="Posts"
-        onPress={() => navigation.navigate('Posts')}
+        onPress={() => navigation.navigate('TabNav', {screen: 'Posts'})}
       />
       <NavButton
         iconName="calendar"
         text="Experiences"
-        onPress={() => navigation.navigate('Experiences')}
+        onPress={() => navigation.navigate('TabNav', {screen: 'Experiences'})}
       />
       <NavButton
         iconName="cog"
         text="Settings"
-        onPress={() => navigation.navigate('Settings')}
+        onPress={() => navigation.navigate('TabNav', {screen: 'Settings'})}
       />
     </View>
   );
