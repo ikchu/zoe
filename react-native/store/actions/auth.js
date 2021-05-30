@@ -6,8 +6,8 @@ export const restoreToken = (token) => {
   return {type: RESTORE_TOKEN, token: token};
 };
 
-export const signIn = (token) => {
-  return {type: SIGN_IN, token: token};
+export const signIn = (token, user) => {
+  return {type: SIGN_IN, token: token, user: user};
 };
 
 export const signOut = () => {

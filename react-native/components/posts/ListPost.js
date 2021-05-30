@@ -1,11 +1,26 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 
+import {useSelector} from 'react-redux';
+
+import APIAbsolute from '../../axios/apiAbsolute';
 import Colors from '../../constants/colors';
 import ImageCard from './ImageCard';
 import MontserratR from '../text/MontserratR';
 
 const GridPost = (props) => {
+  const [user, setUser] = useState([]);
+
+  const token = useSelector((state) => state.ar.token);
+
+  useEffect(() => {
+    APIAbsolute.get(props.post.user, {
+      headers: {Authorization: `Token ${token}`},
+    })
+      .then((response) => setUser(response.data))
+      .catch((error) => console.error(error));
+  }, [props.post.user, token]);
+
   return (
     <View style={styles.container}>
       <ImageCard
@@ -14,9 +29,7 @@ const GridPost = (props) => {
         resizeMode="cover"
       />
       <View style={styles.details}>
-        <MontserratR style={styles.name}>
-          {props.post.user.username}
-        </MontserratR>
+        <MontserratR style={styles.name}>{user.username}</MontserratR>
         <MontserratR style={styles.description}>
           {props.post.description}
         </MontserratR>

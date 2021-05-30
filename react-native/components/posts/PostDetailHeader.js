@@ -1,23 +1,36 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 
+import {useSelector} from 'react-redux';
+
+import APIAbsolute from '../../axios/apiAbsolute';
 import Name from '../Name';
+import ProfilePicThumbnail from '../common/ProfilePicThumbnail';
 import Description from './Description';
 import ImageCard from './ImageCard';
 
 const PostDetailHeader = (props) => {
-  if (props.user.profile.image === null) {
-    props.user.profile.image =
-      'http://192.168.1.188:8888/static/img/default.png';
-  }
+  const [profile, setProfile] = useState([]);
+
+  const token = useSelector((state) => state.ar.token);
+
+  // TODO: this fetch throws an error because the first time it is called,
+  // the PostDetailScreen still hasn't resolved the user, therefore props.user
+  // here is undefined. The second time around, props.user is defined, so the
+  // profile is loaded properly. Right now, I just silence the first error, but
+  // there must be a way to avoid that problem altogether. How to ensure that
+  // this fetch call happens after the PostDetailScreen fetch call finishes?
+  useEffect(() => {
+    APIAbsolute.get(props.user.profile, {
+      headers: {Authorization: `Token ${token}`},
+    })
+      .then((response) => setProfile(response.data))
+      .catch((error) => console.log('PostDetailHeader (silenced): ' + error));
+  }, [props.user.profile, token]);
+
   return (
     <View style={styles.container}>
-      <ImageCard
-        uri={props.user.profile.image}
-        cardStyle={styles.imageContainer}
-        resizeMode="cover"
-        style={styles.image}
-      />
+      <ProfilePicThumbnail uri={profile.image} />
       <View style={styles.name}>
         <Name>{props.user.username}</Name>
         <Description>Location PlaceHolder</Description>
@@ -30,16 +43,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     height: 50,
-  },
-  imageContainer: {
-    width: 50,
-    height: 50,
-  },
-  image: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    borderWidth: StyleSheet.hairlineWidth,
   },
   name: {
     flex: 1,

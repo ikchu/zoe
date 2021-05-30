@@ -7,7 +7,7 @@ const EventsScreen = (props) => {
   return (
     <SafeAreaView>
       <View>
-        <Text>Events!</Text>
+        <Text>Events</Text>
       </View>
     </SafeAreaView>
   );

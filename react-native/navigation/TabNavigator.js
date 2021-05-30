@@ -22,7 +22,7 @@ const screenOptions = ({route}) => ({
     } else if (route.name === 'Messenger') {
       iconName = focused ? 'chatbubble' : 'chatbubble-outline';
     } else if (route.name === 'Settings') {
-      iconName = focused ? 'heart' : 'heart-outline';
+      iconName = focused ? 'cog' : 'cog-outline';
     } else if (route.name === 'Profile') {
       iconName = focused ? 'person' : 'person-outline';
     }

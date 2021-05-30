@@ -38,9 +38,11 @@ const LoginScreen = ({navigation}) => {
     (data) => {
       API.post('/login/', {username: username, password: password})
         .then(async (response) => {
-          const {token} = response.data;
+          const {token, user} = response.data;
+          // TODO: figure out how to actually persist these values
           // await SecureStore.setItemAsync('token', token);
-          dispatch(signIn(token));
+          // await SecureStore.setItemAsync('user', user);
+          dispatch(signIn(token, user));
         })
         .catch((error) => console.log(error));
     },

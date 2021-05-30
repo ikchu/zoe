@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import MontserratR from './text/MontserratR';
+import MontserratR from '../text/MontserratR';
 
-import Colors from '../constants/colors';
+import Colors from '../../constants/colors';
 
 const NavButton = (props) => {
   const [pressed, setPressed] = useState(false);

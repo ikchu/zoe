@@ -1,27 +1,61 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Alert} from 'react-native';
+
+import {useNavigation} from '@react-navigation/native';
 
 import Name from '../Name';
 import Description from '../posts/Description';
 import ImageCard from '../posts/ImageCard';
+import IconButton from '../common/IconButton';
+import Colors from '../../constants/colors';
 
 const ProfileHeader = (props) => {
-  if (props.user.profile.image === null) {
-    props.user.profile.image =
-      'http://192.168.1.188:8888/static/img/default.png';
+  const navigation = useNavigation();
+
+  if (props.profile.image === null) {
+    props.profile.image = 'http://192.168.1.188:8888/static/img/default.png';
   }
   return (
     <View style={styles.container}>
       <ImageCard
-        uri={props.user.profile.image}
+        uri={props.profile.image}
         cardStyle={styles.imageContainer}
         resizeMode="cover"
         style={styles.image}
       />
       <View style={styles.name}>
-        <Name style={{fontSize: 25}}>{props.user.username}</Name>
+        <Name style={{fontSize: 25}}>{props.user.name}</Name>
         <Description>Location PlaceHolder</Description>
-        <Description>{props.user.profile.bio}</Description>
+        <Description>{props.profile.bio}</Description>
+        <View style={styles.iconRow}>
+          <IconButton
+            iconName="color-palette-outline"
+            size={20}
+            color={Colors.c4}
+            style={styles.icon}
+            onPress={() => navigation.navigate('Tailor')}
+          />
+          <IconButton
+            iconName="person-outline"
+            size={20}
+            color={Colors.c4}
+            style={styles.icon}
+            onPress={() =>
+              Alert.alert('TODO', 'Not sure what this button should do lol', [
+                {text: 'Dismiss', style: 'cancel'},
+              ])
+            }
+            // TODO: I'm not sure what this button should do...
+          />
+          <IconButton
+            iconName="search-outline"
+            size={20}
+            color={Colors.c4}
+            style={styles.icon}
+            onPress={() => navigation.navigate('Search Users')}
+            // TODO: Is this really the best place to put the user search feature?
+          />
+        </View>
       </View>
     </View>
   );
@@ -29,15 +63,11 @@ const ProfileHeader = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: 'red',
-    borderWidth: 1,
     flexDirection: 'row',
     height: 120,
     justifyContent: 'space-between',
   },
   imageContainer: {
-    borderColor: 'green',
-    borderWidth: 1,
     width: 120,
     height: 120,
   },
@@ -45,15 +75,19 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    borderWidth: StyleSheet.hairlineWidth,
   },
   name: {
-    borderColor: 'blue',
-    borderWidth: 1,
     flex: 1,
     // justifyContent: 'center',
     paddingTop: 10,
     paddingLeft: 20,
+  },
+  iconRow: {
+    paddingTop: 10,
+    flexDirection: 'row',
+  },
+  icon: {
+    marginRight: 15,
   },
 });
 

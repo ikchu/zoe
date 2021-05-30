@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
-import NavButton from '../components/NavButton';
+import NavButton from '../components/common/NavButton';
 
 import Colors from '../constants/colors';
 

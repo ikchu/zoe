@@ -1,15 +1,29 @@
-import React from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, StyleSheet} from 'react-native';
 
+import {useSelector} from 'react-redux';
+
+import APIAbsolute from '../../axios/apiAbsolute';
 import PostDetailHeader from '../../components/posts/PostDetailHeader';
 import ImageCard from '../../components/posts/ImageCard';
 
 const PostDetailScreen = ({route, navigation}) => {
   const {post} = route.params;
+
+  const [user, setUser] = useState([]);
+
+  const token = useSelector((state) => state.ar.token);
+
+  useEffect(() => {
+    APIAbsolute.get(post.user, {headers: {Authorization: `Token ${token}`}})
+      .then((response) => setUser(response.data))
+      .catch((error) => console.error(error));
+  }, [post.user, token, user.profile]);
+
   return (
     // <SafeAreaView style={styles.safeArea}>
     <View style={styles.container}>
-      <PostDetailHeader user={post.user} />
+      <PostDetailHeader user={user} />
       <ImageCard
         uri={post.pic}
         cardStyle={styles.imageContainer}
