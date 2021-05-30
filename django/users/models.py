@@ -42,7 +42,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='profile_pics')
+    image = models.ImageField(upload_to='profile_pics', default='default.png')
     bio = models.CharField(max_length = 255, blank=True)
     slug = AutoSlugField(populate_from='user')
 

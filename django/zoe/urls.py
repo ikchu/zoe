@@ -18,18 +18,20 @@ from rest_framework.authtoken.views import ObtainAuthToken
 router = routers.DefaultRouter()
 router.register(r'users', user_rest_views.UserViewSet, basename='customuser')
 router.register(r'profiles', user_rest_views.ProfileViewSet, basename='profile')
-router.register(r'posts', feed_rest_views.PostViewSet)
+router.register(r'posts', feed_rest_views.PostViewSet, basename='post')
 router.register(r'messages', messenger_rest_views.MessageViewSet, basename='message')
 router.register(r'conversations', messenger_rest_views.ConversationViewSet, basename='conversation')
 router.register(r'friendships', friendship_rest_views.FriendshipViewSet, basename='friend')
 
 other_rest_urls = [
-    path('login/', ObtainAuthToken.as_view(), name='user_login'),
+    # path('login/', ObtainAuthToken.as_view(), name='user_login'),
+    path('login/', user_rest_views.LoginUserAPIView.as_view(), name='user_login'),
     path('logout/', user_rest_views.LogoutUserAPIView.as_view(), name='user_logout'),
 ]
 
 authrouter = routers.DefaultRouter()
 authrouter.register(r'users', user_rest_views.AuthUserViewSet)
+authrouter.register(r'profiles', user_rest_views.AuthProfileViewSet)
 authrouter.register(r'messages', messenger_rest_views.AuthMessageViewSet)
 authrouter.register(r'conversations', messenger_rest_views.AuthConversationViewSet)
 

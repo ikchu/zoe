@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from users.models import Profile
-from users.permissions import UserPermission
+from users.permissions import UserPermission, ProfilePermission
 from friendship.models import Friend
 from users.serializers import UserSerializer, ProfileSerializer
 from rest_framework import viewsets, permissions, status, generics
@@ -49,12 +49,28 @@ class ProfileViewSet(viewsets.ModelViewSet):
     This viewset should contain all profiles of users that are
     friends with the currently authenticated user
     """
+    permission_classes = [ProfilePermission]
     serializer_class = ProfileSerializer
 
     def get_queryset(self):
         user = self.request.user
-        friends = Friend.objects.friends(user)
-        return Profile.objects.filter(user__in=friends)
+        friendships = Friend.objects.filter(to_user=user).values_list('from_user', flat=True)
+        return Profile.objects.filter(Q(pk__in=friendships) | Q(pk=user.pk))
+        # return Profile.objects.filter(user__in=friends)
+
+class LoginUserAPIView(ObtainAuthToken):
+    """
+    Overriding ObtainAuthToken.post to modify login behavior.
+    Added a line which extracts the hyperlink field from the user object,
+    which I then return in the response. 
+    """
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        user_hyperlink = UserSerializer(user, context={'request': request}).data['url']
+        return Response({'token': token.key, 'user': user_hyperlink})
 
 class LogoutUserAPIView(APIView):
     """
@@ -79,3 +95,12 @@ class AuthUserViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAdminUser]
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
+
+class AuthProfileViewSet(viewsets.ModelViewSet):
+    """
+    This viewset should contain all user profiles.
+    For admin use only
+    """
+    permission_classes = [permissions.IsAdminUser]
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
