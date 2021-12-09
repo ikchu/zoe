@@ -5,19 +5,23 @@ import MontserratBC from '../text/MontserratBC';
 
 import Colors from '../../constants/colors';
 
-const SettingsButton = (props) => {
+const WideButton = (props) => {
   return (
     <Pressable
-      style={({pressed}) => (pressed ? styles.buttonPressed : styles.button)}
+      style={({pressed}) =>
+        pressed
+          ? {...styles.buttonPressed, ...props.containerStyle}
+          : {...styles.button, ...props.containerStyle}
+      }
       {...props}>
-      <MontserratBC style={styles.text}>{props.text}</MontserratBC>
+      <MontserratBC style={{...styles.text, ...props.textStyle}}>{props.text}</MontserratBC>
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colors.c2,
+    backgroundColor: Colors.c15,
     justifyContent: 'center',
     marginBottom: 5,
     paddingHorizontal: 20,
@@ -25,7 +29,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   buttonPressed: {
-    backgroundColor: Colors.c2,
+    backgroundColor: Colors.c15,
     justifyContent: 'center',
     marginBottom: 5,
     paddingHorizontal: 20,
@@ -34,8 +38,8 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   text: {
-    color: Colors.c4,
+    color: Colors.c5,
   },
 });
 
-export default SettingsButton;
+export default WideButton;

@@ -62,12 +62,17 @@ const LoginScreen = ({navigation}) => {
           <LoginInput
             placeholder="Username"
             onChangeText={usernameInputHandler}
-            returnKeyType="next"
+            onSubmitEditing={() => {
+              this.secondInput.focus();
+            }}
           />
           <LoginInput
             placeholder="Password"
             onChangeText={passwordInputHandler}
             secureTextEntry
+            innerRef={(input) => {
+              this.secondInput = input;
+            }}
           />
           <AuthButton onPress={signInHandler}>Log In</AuthButton>
           <SmallTextButton>Forgot Password?</SmallTextButton>

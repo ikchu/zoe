@@ -53,8 +53,8 @@ const RegisterScreen = (props) => {
         password: password,
       })
         .then((response) => {
-          const {token} = response.data;
-          dispatch(signIn(token));
+          const {token, url} = response.data;
+          dispatch(signIn(token, url));
         })
         .catch((error) => console.log(error));
     },
@@ -74,22 +74,37 @@ const RegisterScreen = (props) => {
           <LoginInput
             placeholder="Full name"
             onChangeText={nameInputHandler}
-            returnKeyType="next"
+            onSubmitEditing={() => {
+              this.secondInput.focus();
+            }}
           />
           <LoginInput
             placeholder="Email"
             onChangeText={emailInputHandler}
-            returnKeyType="next"
+            innerRef={(input) => {
+              this.secondInput = input;
+            }}
+            onSubmitEditing={() => {
+              this.thirdInput.focus();
+            }}
           />
           <LoginInput
             placeholder="Username"
             onChangeText={usernameInputHandler}
-            returnKeyType="next"
+            innerRef={(input) => {
+              this.thirdInput = input;
+            }}
+            onSubmitEditing={() => {
+              this.fourthInput.focus();
+            }}
           />
           <LoginInput
             placeholder="Password"
             onChangeText={passwordInputHandler}
             secureTextEntry
+            innerRef={(input) => {
+              this.fourthInput = input;
+            }}
           />
           <AuthButton onPress={() => registerHandler()}>Sign Up</AuthButton>
         </Pressable>

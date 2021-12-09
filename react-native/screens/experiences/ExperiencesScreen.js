@@ -3,14 +3,14 @@ import {View, Text} from 'react-native';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const EventsScreen = (props) => {
+const ExperiencesScreen = (props) => {
   return (
     <SafeAreaView>
-      <View>
-        <Text>Events</Text>
+      <View style={{alignItems: 'center'}}>
+        <Text>Experiences Page Under Construction :)</Text>
       </View>
     </SafeAreaView>
   );
 };
 
-export default EventsScreen;
+export default ExperiencesScreen;

@@ -37,9 +37,12 @@ const AuthNavigator = () => {
 
   const token = useSelector((state) => state.ar.token);
 
-  if (useSelector((state) => state.ar.isLoading)) {
-    return <SplashScreen />;
-  }
+  // TODO: I'm not sure why, but when building with xCode, the block causes
+  // the app to get stuck on the splash screen. When building with run-ios,
+  // this isn't a problem. I'm commenting it out for now. 
+  // if (useSelector((state) => state.ar.isLoading)) {
+  //   return <SplashScreen />;
+  // }
 
   return (
     <SafeAreaProvider style={styles.safeArea}>

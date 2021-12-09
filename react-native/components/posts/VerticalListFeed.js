@@ -7,10 +7,12 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 import ListPost from './ListPost';
 import API from '../../axios/api';
 import Colors from '../../constants/colors';
+import IconButton from '../common/IconButton';
 
 const VerticalListFeed = (props) => {
   const [isLoading, setLoading] = useState(true);
@@ -25,6 +27,22 @@ const VerticalListFeed = (props) => {
       .finally(() => setLoading(false));
   }, [token]);
 
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <IconButton
+          iconName="add"
+          iconSize={30}
+          iconColor={Colors.c4}
+          style={styles.headerButton}
+          onPress={() => navigation.navigate('New Post')}
+        />
+      ),
+    });
+  });
+
   return (
     <View style={styles.feedContainer}>
       {isLoading ? (
@@ -37,9 +55,7 @@ const VerticalListFeed = (props) => {
           renderItem={({item}) => {
             return (
               <Pressable
-                onPress={() =>
-                  props.navigation.navigate('Details', {post: item})
-                }
+                onPress={() => navigation.navigate('Details', {post: item})}
                 style={styles.pressable}>
                 <ListPost post={item} />
               </Pressable>
@@ -53,13 +69,17 @@ const VerticalListFeed = (props) => {
 
 const styles = StyleSheet.create({
   feedContainer: {
-    backgroundColor: Colors.c1,
+    backgroundColor: Colors.c15,
     flex: 1,
     // width: '100%',
-    padding: 20,
+    paddingTop: 20,
   },
   pressable: {
     flex: 1,
+    paddingHorizontal: 20,
+  },
+  headerButton: {
+    paddingRight: 12,
   },
 });
 

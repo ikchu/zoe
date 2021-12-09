@@ -13,6 +13,8 @@ const LoginInput = (props) => {
           keyboardType="ascii-capable"
           placeholderTextColor="white"
           style={styles.loginInput}
+          ref={props.innerRef}
+          blurOnSubmit={false}
           {...props}
         />
       </View>

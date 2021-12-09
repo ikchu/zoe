@@ -13,7 +13,8 @@ const ProfileHeader = (props) => {
   const navigation = useNavigation();
 
   if (props.profile.image === null) {
-    props.profile.image = 'http://192.168.1.188:8888/static/img/default.png';
+    // props.profile.image = 'http://192.168.1.188:8888/static/img/default.png';
+    props.profile.image = 'http://127.0.0.1:8000/static/img/default.png';
   }
   return (
     <View style={styles.container}>
@@ -30,15 +31,15 @@ const ProfileHeader = (props) => {
         <View style={styles.iconRow}>
           <IconButton
             iconName="color-palette-outline"
-            size={20}
-            color={Colors.c4}
+            iconSize={20}
+            iconColor={Colors.c4}
             style={styles.icon}
             onPress={() => navigation.navigate('Tailor')}
           />
           <IconButton
             iconName="person-outline"
-            size={20}
-            color={Colors.c4}
+            iconSize={20}
+            iconColor={Colors.c4}
             style={styles.icon}
             onPress={() =>
               Alert.alert('TODO', 'Not sure what this button should do lol', [
@@ -49,8 +50,8 @@ const ProfileHeader = (props) => {
           />
           <IconButton
             iconName="search-outline"
-            size={20}
-            color={Colors.c4}
+            iconSize={20}
+            iconColor={Colors.c4}
             style={styles.icon}
             onPress={() => navigation.navigate('Search Users')}
             // TODO: Is this really the best place to put the user search feature?

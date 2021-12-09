@@ -34,15 +34,15 @@ class UserViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         """
         This function overrides rest_framework.mixins.CreateModelMixin.create.
-        Now, create token here so that the it can be returned in the response
+        Now, create token here so that the it can be returned in the response.
+        Also extract the hyperlink field from the user object and return in the response.
         """
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         token = Token.objects.create(user=serializer.instance)
-        token_data = {'token': token.key}
-        return Response({**serializer.data, **token_data}, status=status.HTTP_201_CREATED, headers=headers)
+        return Response({**serializer.data, 'token': token.key}, status=status.HTTP_201_CREATED, headers=headers)
 
 class ProfileViewSet(viewsets.ModelViewSet):
     """

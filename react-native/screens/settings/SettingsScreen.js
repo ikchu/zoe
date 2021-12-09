@@ -2,7 +2,7 @@
 import React, {useCallback} from 'react';
 import {View, StyleSheet} from 'react-native';
 
-import SettingButton from '../../components/settings/SettingButton';
+import SettingButton from '../../components/common/WideButton';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {signOut} from '../../store/actions/auth'
@@ -20,7 +20,7 @@ const SettingsScreen = ({navigation}) => {
       .then(() => {
         dispatch(signOut());
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {console.log(error); dispatch(signOut());});
   }, [dispatch, token]);
 
   return (
@@ -32,15 +32,15 @@ const SettingsScreen = ({navigation}) => {
       <SettingButton text="About App" onPress={() => navigation.navigate('About')} />
       <SettingButton text="Send Feedback" onPress={() => navigation.navigate('Feedback')} />
       <SettingButton text="Support" onPress={() => navigation.navigate('Support')} />
-      <SettingButton text="Log Out" onPress={signOutHandler} />
       <SettingButton text="App Version" />
+      <SettingButton text="Log Out" onPress={signOutHandler} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
+    marginTop: 5,
   },
 });
 

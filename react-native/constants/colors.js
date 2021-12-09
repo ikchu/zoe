@@ -5,4 +5,5 @@ export default {
   c3: '#B9BDAA',
   c4: '#646B56',
   c5: '#3E4037',
+  c15: '#E7E7E7', // light grey for NewPostScreen input boxes
 };

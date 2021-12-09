@@ -23,8 +23,8 @@ const MessengerScreen = (props) => {
       headerRight: () => (
         <IconButton
           iconName="create"
-          size={28}
-          color={Colors.c4}
+          iconSize={28}
+          iconColor={Colors.c4}
           style={styles.composeButton}
           onPress={() => props.navigation.navigate('New Message')}
         />

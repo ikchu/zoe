@@ -1,36 +1,56 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
-import NavButton from '../components/common/NavButton';
+import IconButton from '../components/common/IconButton';
 
 import Colors from '../constants/colors';
 
 const HomeScreen = ({navigation}) => {
   return (
     <View style={styles.view}>
-      <NavButton
+      <IconButton
         iconName="person"
+        invert={true}
+        iconSize={30}
+        iconColor={Colors.c1}
         text="Profile"
+        style={styles.iconButton}
         onPress={() => navigation.navigate('TabNav', {screen: 'Profile'})}
       />
-      <NavButton
+      <IconButton
         iconName="chatbubble"
+        invert={true}
+        iconSize={30}
+        iconColor={Colors.c1}
         text="Messages"
+        style={styles.iconButton}
         onPress={() => navigation.navigate('TabNav', {screen: 'Messenger'})}
       />
-      <NavButton
+      <IconButton
         iconName="camera"
+        invert={true}
+        iconSize={30}
+        iconColor={Colors.c1}
         text="Posts"
+        style={styles.iconButton}
         onPress={() => navigation.navigate('TabNav', {screen: 'Posts'})}
       />
-      <NavButton
+      <IconButton
         iconName="calendar"
+        invert={true}
+        iconSize={30}
+        iconColor={Colors.c1}
         text="Experiences"
+        style={styles.iconButton}
         onPress={() => navigation.navigate('TabNav', {screen: 'Experiences'})}
       />
-      <NavButton
+      <IconButton
         iconName="cog"
+        invert={true}
+        iconSize={30}
+        iconColor={Colors.c1}
         text="Settings"
+        style={styles.iconButton}
         onPress={() => navigation.navigate('TabNav', {screen: 'Settings'})}
       />
     </View>
@@ -43,6 +63,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.c2,
     flex: 1,
     justifyContent: 'center',
+  },
+  iconButton: {
+    alignItems: 'center',
+    marginVertical: 15,
   },
 });
 
