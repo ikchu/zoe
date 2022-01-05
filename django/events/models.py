@@ -21,6 +21,8 @@ class Event(models.Model):
     interested_users = models.ManyToManyField(user, related_name='interested_events', blank=True)
     committed_users = models.ManyToManyField(user, related_name='committed_events', blank=True)
     
+    date_occurring = models.DateTimeField(blank=True, null=True)
+    
     capacity = models.IntegerField(blank=True, default=0)
     price = models.DecimalField(max_digits=7,decimal_places=2, blank=True, null=True)
     is_recurring = models.BooleanField(default=False)

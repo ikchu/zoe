@@ -15,8 +15,8 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Event
         fields = ['title', 'desc', 'creator', 'date_created', 'themes', 'long', 
-                  'lat', 'interested_users', 'committed_users', 'capacity',
-                  'price', 'is_recurring', 'recurring_duration',
+                  'lat', 'interested_users', 'committed_users', 'date_occurring',
+                  'capacity', 'price', 'is_recurring', 'recurring_duration',
                   'visibility', 'image']
         # the creator should be added automatically through viewset method
         # long and lat coordinates will have to be sorted out later
