@@ -17,7 +17,15 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['title', 'desc', 'creator', 'date_created', 'themes', 'long', 
                   'lat', 'interested_users', 'committed_users', 'date_occurring',
                   'capacity', 'price', 'is_recurring', 'recurring_duration',
-                  'visibility', 'image']
+                  'is_public', 'image']
         # the creator should be added automatically through viewset method
         # long and lat coordinates will have to be sorted out later
         read_only_fields = ['creator', 'long', 'lat']
+    
+    def validate_is_public(self, value):
+        """
+        Ensures that user is allowed to set is_public field to True
+        """
+        if not self.context['request'].user.is_superuser and value:
+            raise serializers.ValidationError("You are not allowed to create public events")
+        return value
