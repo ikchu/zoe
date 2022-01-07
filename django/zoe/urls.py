@@ -26,7 +26,7 @@ router.register(r'messages', messenger_rest_views.MessageViewSet, basename='mess
 router.register(r'conversations', messenger_rest_views.ConversationViewSet, basename='conversation')
 router.register(r'friendships', friendship_rest_views.FriendshipViewSet, basename='friend')
 router.register(r'events', events_rest_views.EventViewSet, basename='event')
-router.register(r'themes', events_rest_views.ThemeViewSet, basename='themes')
+router.register(r'themes', events_rest_views.ThemeViewSet, basename='theme')
 
 other_rest_urls = [
     # path('login/', ObtainAuthToken.as_view(), name='user_login'),
