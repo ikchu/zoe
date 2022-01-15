@@ -30,5 +30,5 @@ class Event(models.Model):
     # requires certain permissions to make their events visible to everyone
     is_public = models.BooleanField(default=False)
     
-    image = models.ImageField(upload_to='event_pics', default='default.png')
+    image = models.ImageField(blank=True, null=True,upload_to='event_pics', default='default.png')
         

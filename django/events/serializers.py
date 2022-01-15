@@ -9,6 +9,7 @@ class ThemeSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['title','interested_users']
     
 class EventSerializer(serializers.HyperlinkedModelSerializer):
+    creator = serializers.HyperlinkedRelatedField(view_name='customuser-detail',read_only=True, default=serializers.CurrentUserDefault())
     interested_users = UserSerializer(read_only=True, many=True)
     committed_users = UserSerializer(read_only=True, many=True)
     themes = ThemeSerializer(read_only=True, many=True)
@@ -20,7 +21,7 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
                   'is_public', 'image']
         # the creator should be added automatically through viewset method
         # long and lat coordinates will have to be sorted out later
-        read_only_fields = ['creator', 'long', 'lat']
+        read_only_fields = ['long', 'lat']
     
     def validate_is_public(self, value):
         """
@@ -29,3 +30,6 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
         if not self.context['request'].user.is_superuser and value:
             raise serializers.ValidationError("You are not allowed to create public events")
         return value
+    def save(self, **kwargs):
+        kwargs['creator'] = self.context['request'].user
+        return super().save(**kwargs)
