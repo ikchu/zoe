@@ -10,6 +10,7 @@ from feed import rest_views as feed_rest_views
 from messenger import views as messenger_views
 from messenger import rest_views as messenger_rest_views
 from friendship import rest_views as friendship_rest_views
+from events import rest_views as events_rest_views
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -24,6 +25,8 @@ router.register(r'posts', feed_rest_views.PostViewSet, basename='post')
 router.register(r'messages', messenger_rest_views.MessageViewSet, basename='message')
 router.register(r'conversations', messenger_rest_views.ConversationViewSet, basename='conversation')
 router.register(r'friendships', friendship_rest_views.FriendshipViewSet, basename='friend')
+router.register(r'events', events_rest_views.EventViewSet, basename='event')
+router.register(r'themes', events_rest_views.ThemeViewSet, basename='theme')
 
 other_rest_urls = [
     # path('login/', ObtainAuthToken.as_view(), name='user_login'),
